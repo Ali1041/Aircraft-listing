@@ -1,0 +1,3 @@
+Your payment for classified has been successfully completed.
+
+You can manage your classifieds at any time here: {{ domain_url }}/my-classifieds/

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="page-header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="header-page">
+                        <h1>Get In Touch</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content-area clearfix">
+        <!-- =-=-=-=-=-=-= Latest Ads =-=-=-=-=-=-= -->
+        <section class="section-padding ">
+            <!-- Main Container -->
+            <div class="container">
+                <!-- Row -->
+                <div class="row">
+                    {% for message in messages %}
+                        <div class="col-xs-12">
+                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding ">
+                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <div class="">
+                                <h2>Send a Message</h2>
+
+                                <form method="post" action="">{% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-xs-12">
+                                            <div class="form-group">
+	                                            <input type="text" name="name" class="custom-form-control w-100" placeholder="Name">
+                                            </div>
+                                            <div class="form-group">
+	                                            <input type="email" name="email" class="custom-form-control w-100" placeholder="Email">
+                                            </div>
+                                            <div class="form-group">
+	                                            <input type="text" name="subject" class="custom-form-control w-100" placeholder="Subject">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-xs-12">
+                                            <div class="form-group">
+	                                            <textarea placeholder="Message" class="custom-form-control w-100" name="msg" id="" cols="15" rows="6">
+
+	                                            </textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <button class="custom-btn btn-red" type="submit">Send Message</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="contactInfo">
+                                <h2>Contact Info</h2>
+
+                                <div class="singleContadds">
+                                    <i class="fa fa-map-marker"></i>
+
+                                    <p>
+                                        {{ contact_address }}
+                                    </p>
+                                </div>
+                                <div class="singleContadds phone">
+                                    <i class="fa fa-phone"></i>
+
+                                    <p>
+                                        {{ contact_phone_number }} - <span>Office</span>
+                                    </p>
+                                </div>
+                                <div class="singleContadds">
+                                    <i class="fa fa-envelope"></i>
+                                    <a href="mailto:{{ contact_main_email }}">{{ contact_main_email }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- Main Container End -->
+        </section>
+    </div>
+{% endblock %}

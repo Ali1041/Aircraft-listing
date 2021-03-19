@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+{% load bootstrap_tags %}
+{% load static %}
+
+
+
+{% block content %}
+	<form action="{% url 'post_ad' %}" method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+	<!--Wrapper upper form div -->
+	<div class="container post-ad-form bg-black-transparent text-white extra-padding postdetails">
+
+		<h1 class="text-center">Sell your aircraft with us</h1>
+		<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, in.</p>
+
+		<!--Aircraft type div -->
+		<div class="my-3" style="width: 50%">
+
+			<label for="" class="d-block">
+
+				Aircraft Type
+
+			</label>
+
+
+			<select name="type" id="" class="custom-form-control1 w-90">
+
+
+				<option value="">Select an option</option>
+
+			</select>
+
+	</div>
+
+
+		<!--Row 2 wrapper div -->
+		<div class="row my-3">
+
+
+			<div class="col-md-6 p-0">
+
+				<label for="" class="d-block">
+
+					Aircraft Make
+
+				</label>
+
+				<select name="make" id="" class="custom-form-control1 w-90">
+
+					<option value="">Select an option</option>
+
+				</select>
+
+
+			</div>
+
+
+
+
+			<div class="col-md-6 p-0 w-40">
+
+				<label for="" id="CA">
+
+					Commercial Aircraft
+				</label>
+
+				<div class="d-flex justify-content-between" style="width: 40%">
+					<p class="m-0"><input type="radio" name="CA">Yes</p>
+					<p class="m-0"><input type="radio" name="CA">No</p>
+
+				</div>
+
+			</div>
+
+
+
+		</div>
+		<!--End row 2 wrapper div -->
+
+
+		<!--Row 3 wrapper div -->
+		<div class="row my-3">
+
+
+			<div class="col-md-6 p-0">
+
+				<label for="" class="d-block">Price</label>
+
+				<select name="price" id="" class="custom-form-control1 w-90">
+
+					<option value="">Select an option</option>
+
+				</select>
+
+
+			</div>
+
+
+
+			<div class="col-md-6 p-0">
+
+				<label for="" class="d-block">
+
+					Year
+
+				</label>
+
+
+				<select name="year" id="" class="custom-form-control1 w-90">
+
+					<option value="">Select an option</option>
+
+				</select>
+
+
+			</div>
+
+
+		</div>
+		<!--End Row 3 wrapper div -->
+
+
+		<!--Row 4 wrapper div -->
+		<div class="row my-3">
+
+
+			<div class="col-md-6 p-0">
+				<label for="">Serial Number</label>
+				<select name="serial_number" id="" class="custom-form-control1 w-90">
+					<option value="">Select an option</option>
+				</select>
+			</div>
+
+
+
+			<div class="col-md-6 p-0">
+				<label for="">Aircraft Status</label>
+				<div class="d-flex justify-content-between" style="width: 70%">
+					<p ><input type="radio" name="aircraft_status">Parked</p>
+					<p><input type="radio" name="aircraft_status">In storage</p>
+					<p><input type="radio" name="aircraft_status">Airworthy</p>
+
+
+				</div>
+
+			</div>
+
+
+
+		</div>
+		<!--End row 4 wrapper div -->
+	</div>
+	<!--End wrapper upper form div -->
+{% endblock content %}
+
+
+{% block static_content %}
+	<!--Wrapper lower div -->
+	<div class="container post-ad-form bg-black-transparent text-white extra-padding postdetails">
+
+		<!--Description div -->
+		<div class="my-3">
+			<label for="" class="d-block">
+				Description
+			</label>
+			<textarea class="custom-form-control1 w-100" name="description" id="" cols="5" rows="5">
+
+			</textarea>
+
+		</div>
+
+
+
+		<!--Engine detail div -->
+
+		<div class="my-3">
+			<label for="" class="d-block">
+				Engine Details
+			</label>
+			<textarea class="custom-form-control1 w-100" name="engine_detail" id="" cols="5" rows="5">
+
+			</textarea>
+		</div>
+
+		<!--Interior div -->
+
+		<div class="my-3">
+			<label for="" class="d-block">
+				Interior
+			</label>
+			<textarea class="custom-form-control1 w-100" name="interior" id="" cols="5" rows="5">
+
+			</textarea>
+		</div>
+
+
+
+		<!--Exterior div -->
+
+		<div class="my-3">
+			<label for="" class="d-block">
+				Exterior
+			</label>
+			<textarea class="custom-form-control1 w-100" name="exterior" id="" cols="5" rows="5">
+
+			</textarea>
+		</div>
+
+		<!--Avionics div -->
+
+		<div class="my-3">
+			<label for="" class="d-block">
+				Avionics
+			</label>
+			<textarea class="custom-form-control1 w-100" name="avionics" id="" cols="5" rows="5">
+
+			</textarea>
+		</div>
+
+
+
+		<!--maintenance div -->
+		<div class="my-3">
+
+			<label for="" class="d-block">
+				Maintenance Status
+
+			</label>
+			<textarea class="custom-form-control1 w-100" name="maintenance_status" id="" cols="5" rows="5">
+
+			</textarea>
+		</div>
+
+
+		<!--additional info div -->
+
+		<div class="my-3">
+			<label for="" class="d-block">
+				Additional Information
+			</label>
+			<textarea class="custom-form-control1 w-100" name="additional_status" id="" cols="5" rows="5">
+
+			</textarea>
+		</div>
+
+
+
+		<!--upload image div -->
+
+		<div class="d-flex my-5">
+			<span class="align-self-center">Upload Image</span>
+			<input id="upload-btn" name="main_image" onchange="image_handle(event)" type="file" hidden style="display: none" >
+			<label class="custom-btn btn-red ml-2" for="upload-btn">Choose File</label>
+			<span class="ml-2 align-self-center" id="file-change">No file choosen</span>
+		</div>
+
+
+
+		<div class="my-5">
+			<h3 class="main-title text-left">
+				Contact Details
+			</h3>
+		</div>
+
+		<!--Contact detail row 1 wrapper div -->
+		<div class="row my-3">
+			<!-- Category  -->
+			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 p-0">
+				<label class="d-block">Contact Email
+				</label>
+				{{ form.seller_email|add_class:"custom-form-control1 w-100" }}
+			</div>
+
+			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+				<label class=" d-block">Contact Phone Number
+				</label>
+				{{ form.phone_number|add_class:"custom-form-control1 w-100" }}
+			</div>
+		</div>
+		<!--end contact detail row 1 wrapper div -->
+
+		<!--Contact detail row 2 wrapper div -->
+		<div class="row my-3">
+			<!-- Category  -->
+			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 p-0">
+				<label class="d-block">Name/Company Name (Optional)
+				</label>
+				{{ form.company_name|add_class:"custom-form-control1 w-100" }}
+
+			</div>
+
+			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+
+				<label class="d-block ">Aircraft Location (Required)
+				</label>
+				{{ form.aircraft_location|add_class:"custom-form-control1 w-100" }}
+			</div>
+
+		</div>
+		<!--end contact detail row 2 wrapper div -->
+
+		<!--company logo div -->
+		<div class="d-flex my-3">
+			<span class="align-self-center">Upload Company Logo</span>
+			<input id="upload-btn-1"  type="file" hidden="hidden" style="display: none" >
+			<label class="custom-btn btn-red ml-2" for="upload-btn-1">Choose File</label>
+			<span class="ml-2 align-self-center" id="file-change-1">No file choosen</span>
+		</div>
+
+		<div class="text-center">
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, voluptatem!</p>
+			<button type="submit" class="custom-btn btn-red">Submit my Listing</button>
+
+		</div>
+	</div>
+	<!--End wrapper lower form div -->
+	</form>
+{% endblock %}
+
+
+
+
+{% block js %}
+	<script>
+		const bg = document.getElementById('bg')
+		bg.classList.add('bg-transparent')
+
+
+	{# image handlingon custom upload btn	#}
+		function image_handle(e){
+		    console.log(e.target.value)
+			const fileName = document.getElementById('file-change')
+			fileName.innerHTML = e.target.value
+		}
+	</script>
+    <script src="{% static 'jquery.formset.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('.images_formset').formset({
+                addText: "Add Another",
+                addCssClass: "btn btn-warning",
+                deleteCssClass: "delete-image-button hidden",
+                animateForms: true
+            });
+        });
+    </script>
+{% endblock %}

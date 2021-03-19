@@ -1,0 +1,90 @@
+{% load static %}
+
+
+	<!-- latest classified wrapper div -->
+	<div class="">
+		<h1 class="text-center">Latest Classifieds</h1>
+
+		<!-- images -->
+		<div class="d-flex justify-content-between w-80 new-w">
+
+			<img src="{% static 'images/list_classfied_1.PNG' %}" height="300px" alt="classified image 1">
+			<img src="{% static 'images/list_classfied_2.PNG' %}" height="300px" alt="classified image 2">
+
+		</div>
+
+		<!-- horizontal bar -->
+		<div class="w-60">
+			<hr class="hr"/>
+		</div>
+
+	</div>
+	<!--Latest classified wrapper div end -->
+
+	<!-- market insight wrapper div -->
+	<div>
+		<h1 class="text-center my-3">Market Insight</h1>
+
+
+		<!-- images div -->
+			<div class="d-flex justify-content-between w-80 new-w">
+
+			<img src="{% static 'images/market1.PNG' %}" height="300px" alt="Market insight images 1">
+			<img src="{% static 'images/market2.PNG' %}" height="300px" alt="Market insight images 2">
+			
+		</div>
+		<!-- horizontal bar -->
+		<div class="w-60">
+			<hr class="hr"/>
+		</div>
+
+
+	</div>
+	<!--market insight wrapper div end -->
+
+	<!-- Call to action/ Text div -->
+	<div class="p-2 w-60 text-center">
+
+		<h1>Another Callout Block</h1>
+		<p class="my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium deleniti est laborum, molestiae odio perspiciatis porro quibusdam repellendus? Deserunt inventore nostrum quis repellendus temporibus voluptatem!</p>
+		<button class="custom-btn btn-red">Call to Action</button>
+
+		<hr class="hr"/>
+
+	</div>
+	<!--end call to action/Text div  -->
+
+
+
+
+
+	<!--Subscribe newsletter div-->
+	<div class="bg-black text-white">
+
+		<h1 class="text-center">Subscribe for news and market insight</h1>
+
+		<!-- input to newsletter div -->
+		<div class="bg-dull">
+
+			<div class="p-2 align-right " style="width: 80%">
+				<input type="email" name="email" class="custom-form-control w-50" placeholder="Enter Email">
+				<button class="custom-btn btn-red move-left1" data-toggle="modal" data-target="#modal">Subscribe</button>
+			</div>
+
+
+		</div>
+
+	</div>
+	<!--End subscribe newsletter div -->
+
+
+	<!--Modal for newsletter -->
+	<div id="modal" class="modal fade">
+		<div class="modal-dialog ">
+			<div class="modal-content bg-black p-4">
+				<h3 class="text-center">You have successfully subscribed to out Newsletter. Thank you.</h3>
+			</div>
+		</div>
+
+	</div>
+	<!--End Modal -->

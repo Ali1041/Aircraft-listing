@@ -1,0 +1,6 @@
+Potential Buyer has contacted you on {{ domain_name }}
+
+Name: {{ name }}
+Email: {{ email }}
+Phone: {{ phone }}
+Message: {{ message }}

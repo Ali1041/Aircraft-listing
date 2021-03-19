@@ -1,0 +1,6 @@
+User has contacted through contact form
+
+Name: {{ name }}
+Email: {{ email }}
+Subject: {{ subject }}
+Message: {{ message }}

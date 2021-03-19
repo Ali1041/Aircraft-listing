@@ -1,0 +1,9 @@
+confusable-homoglyphs==3.0.0
+Django==1.11.10
+django-crispy-forms==1.7.0
+django-filter==1.1.0
+django-registration==2.4.1
+MySQL-python==1.2.5
+Pillow==5.0.0
+pytz==2018.3
+sorl-thumbnail==12.4.1

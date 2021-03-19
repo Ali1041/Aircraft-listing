@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <!-- =-=-=-=-=-=-= Main Content Area =-=-=-=-=-=-= -->
+    <div class="d-flex">
+
+        <!-- Actual form div -->
+        <div class="w-40 align-self-center text-center p-4">
+
+	        <!-- Form -->
+	        <form action="{% url 'login' %}" class="w-90" method="POST" autocomplete="off">
+		        {% csrf_token %}
+		        <h1 class="my-3">Sign in to your account</h1>
+
+		        <!-- Form fields -->
+		        <div>
+			        <input type="email" placeholder="Email" class="custom-form-control1 w-100" name="email">
+
+		        </div>
+
+		        <div class="my-3">
+			        <input type="password" placeholder="Password" class="custom-form-control1 w-100" name="password">
+		        </div>
+
+		        <div class="d-flex justify-content-between">
+
+			        <p>Forgot email/Password?</p>
+					<button class="custom-btn btn-red">Sign In</button>
+
+		        </div>
+
+	        </form>
+
+        </div>
+
+
+    </div>
+	<!-- login main content end -->
+
+	<!-- Classified and market insight file -->
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap_tags %}
+
+
+{% block content %}
+    <!-- =-=-=-=-=-=-= Main Content Area =-=-=-=-=-=-= -->
+	    <div class="d-flex">
+
+        <!-- Actual form div -->
+        <div class="w-40 align-self-center text-center p-4">
+
+	        <!-- Form -->
+	        <form action="{% url 'registration_register' %}" method="POST">
+		        {% csrf_token %}
+		        <h1 class="my-3">Create your account</h1>
+
+		        <!-- Form fields -->
+		        <input type="email" name="email" placeholder="Email" class="custom-form-control1 w-100">
+
+		        <div class="my-3">
+					<input type="password" name="password" placeholder="Password" class="custom-form-control1 w-100">
+		        </div>
+
+				<div class="text-right w-100">
+
+			        <button class="custom-btn btn-red">Create</button>
+
+				</div>
+
+		        <!-- Social account signup -->
+		        <div>
+
+					<p>Or sign up using</p>
+			        <button class="custom-btn btn-white w-100"><i class="fab fa-facebook blue" ></i><span class="blue ml-2">Facebook</span></button>
+			        <button class="custom-btn btn-white w-100 my-3 "><i class="fab fa-google red" ></i><span class="red ml-2">Google</span></button>
+			        <button class="custom-btn btn-white w-100"><i class="fab fa-apple black" ></i><span class="black ml-2">Apple</span></button>
+
+				</div>
+
+	        </form>
+
+        </div>
+
+
+    </div>
+
+	<!-- login main content end -->
+
+{% endblock %}
