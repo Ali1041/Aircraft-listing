@@ -388,3 +388,61 @@ Designed and Development by: ScriptsBundle
 
 
 })(jQuery);
+	function redirect_home(){
+	    location.replace('/')
+	}
+
+	<!--Newsletter ajax call -->
+	function subscribe(e){
+	    const email = e.target.previousElementSibling.value
+		const splitEmail = email.split('@')
+		const text = document.getElementById('modal-text')
+		if (email===''){
+		    text.innerText = 'Please enter a valid email'
+		    return
+		}
+		if (!splitEmail[1]){
+			text.innerText = 'Please enter a valid email'
+
+			return;
+		}
+		const dot = splitEmail[1].split('.')
+
+		if (dot.length===1){
+		    text.innerText = 'Please enter a valid email'
+
+		    return;
+		}
+		function getCookie(name) {
+	    let cookieValue = null;
+	    if (document.cookie && document.cookie !== '') {
+	        const cookies = document.cookie.split(';');
+	        for (let i = 0; i < cookies.length; i++) {
+	            const cookie = cookies[i].trim();
+	            // Does this cookie string begin with the name we want?
+	            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+	                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                break;
+	            }
+	        }
+	    }
+	    return cookieValue;
+}
+		const csrftoken = getCookie('csrftoken');
+	    const BASE_URL = location.origin
+		fetch(`${BASE_URL}/newsletter-subscribe/`,{
+		    method:'POST',
+			body:JSON.stringify({email}),
+			headers:{
+		        'Content-Type':'application/json',
+				'X-CSRFToken':csrftoken
+			},
+		})
+		.then((res)=>{
+		    return res.json()
+		})
+		.then((result)=>{
+		    text.innerText = 'You have successfully subscribed to our Newsletter. Thank you.'
+		})
+
+	}

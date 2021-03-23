@@ -62,7 +62,7 @@ class AircraftMake(models.Model):
     class Meta:
         ordering = ['-number_of_classifieds']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.make_name
 
     @staticmethod
@@ -76,7 +76,7 @@ class AircraftType(models.Model):
     type_make = models.ForeignKey('AircraftMake', on_delete=models.CASCADE)
     type_name = models.CharField(max_length=255)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.type_name
 
 
@@ -139,7 +139,7 @@ class Classified(models.Model):
     class Meta:
         ordering = ['-date_time']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.get_title()
 
     @staticmethod
@@ -163,17 +163,31 @@ class Classified(models.Model):
         return ClassifiedImage.objects.filter(classified=self).count()
 
     def get_main_image(self):
+        print(self)
         images = ClassifiedImage.objects.filter(classified=self)
-
+        print(images)
         if images.count() == 0:
             return False
         else:
-            return images.first()
+            return images.first().get_photo_url()
 
 
 class ClassifiedImage(models.Model):
     classified = models.ForeignKey(Classified, on_delete=models.CASCADE)
     image = ImageField(upload_to="classified_images")
 
+    def __str__(self):
+        return f'{self.classified.aircraft_make} {self.classified.aircraft_type} image'
+
+    def get_photo_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
     # def __unicode__(self):
     #     return "Image for classified #s" % (str(self.classified.id),)
+
+
+class Newsletter(models.Model):
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.email

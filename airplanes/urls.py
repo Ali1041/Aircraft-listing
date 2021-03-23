@@ -14,8 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.urls import path
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
 from django.conf.urls.static import static
 
 from classifieds import views as classifieds_views
@@ -28,16 +29,15 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/register/$',classifieds_views.signup,
         name='registration_register'),
-    url(r'^accounts/', include('django_registration.backends.one_step.urls')),
 
-    url(r'^login/$', classifieds_views.views_login, name='login'),
-    url(r'^logout/$', auth_views.auth_logout, {'next_page': '/'}, name='logout'),
+    path('accounts/login/', classifieds_views.views_login, name='login'),
+    url(r'^logout/$',LogoutView.as_view(), name='logout'),
 
 
     url(r'^$', classifieds_views.index, name='index'),
     url(r'^contacts/$', classifieds_views.contacts, name='contacts'),
-    url(r'^classifieds/$', classifieds_views.classifieds, name='classifieds'),
-    url(r'^classifieds/(?P<classified_id>[0-9]+)/$', classifieds_views.classified, name='classified'),
+    url(r'^classifieds/$', classifieds_views.ClassifiedListView.as_view(), name='classifieds'),
+    url(r'^classifieds/(?P<pk>[0-9]+)/$', classifieds_views.ClassifiedDetailView.as_view(), name='classified'),
     url(r'^classifieds/(?P<classified_id>[0-9]+)/edit/$', classifieds_views.post_ad, name='classified_edit'),
     url(r'^classifieds/(?P<classified_id>[0-9]+)/pay/$', classifieds_views.classified_pay, name='classified_pay'),
     url(r'^classifieds/(?P<classified_id>[0-9]+)/confirm-payment/$', classifieds_views.classified_confirm_payment, name='classified_confirm_payment'),
@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^classifieds/(?P<classified_id>[0-9]+)/deactivate/$', classifieds_views.classified_deactivate, name='classified_deactivate'),
     url(r'^my-classifieds/$', classifieds_views.my_classifieds, name='my_classifieds'),
     url(r'^post-ad/$', classifieds_views.post_ad, name='post_ad'),
+    path('newsletter-subscribe/',classifieds_views.newsletter,name='newsletter'),
 ]
 
 if settings.DEBUG:

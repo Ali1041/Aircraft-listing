@@ -135,7 +135,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'classifieds.User'
 LOGIN_REDIRECT_URL = 'index'
-
+LOGOUT_REDIRECT_URL = 'index'
 # CRISPY
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

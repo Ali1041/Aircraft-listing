@@ -3,141 +3,139 @@
 
 {% block content %}
     <!-- =-=-=-=-=-=-= Main Content Area =-=-=-=-=-=-= -->
-    <div class="main-content-area clearfix">
-        <!-- =-=-=-=-=-=-= Latest Ads =-=-=-=-=-=-= -->
-        <section class="section-padding ">
-            <!-- Main Container -->
-            <div class="container">
-                <!-- Row -->
-                <div class="row">
-                    {% for message in messages %}
-                    <div class="col-xs-12">
-                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                    </div>
-                    {% endfor %}
+	{% if list %}
 
-                    <!-- Middle Content Area -->
-                    <div class="col-md-12 col-xs-12 col-sm-12">
-                        <ul class="list-unstyled">
-                            <!-- Listing Grid -->
-                            {% for classified in classifieds %}
-                                <li>
-                                    <div class="well ad-listing clearfix">
-                                        <div class="col-md-3 col-sm-5 col-xs-12 grid-style no-padding">
-                                            <!-- Image Box -->
-                                            <div class="img-box">
-                                                {% if classified.get_main_image %}
-                                                    <img src="{{ classified.get_main_image.image.url }}" class="img-responsive" alt="">
-                                                {% else %}
-                                                    <img src="{% static 'images/posting/car-4.jpg' %}" class="img-responsive" alt="">
-                                                {% endif %}
+	<div class="container">
+	{% for item in list %}
+		{% if forloop.counter < 3 %}
+		<div class="row p-0 bg-black-transparent repetitve new-w-100 " style="width: 95%;margin: auto;margin-bottom: 5px!important;">
 
-                                                <div class="total-images"><strong>{{ classified.get_images_count }}</strong> photos</div>
-                                                <div class="quick-view"><a href="#ad-preview" data-toggle="modal" class="view-button"><i class="fa fa-search"></i></a></div>
-                                            </div>
-{#                                            <!-- Ad Status --><span class="ad-status"> Featured </span>#}
-                                            <!-- User Preview -->
-                                            <div class="user-preview">
-                                                {% if classified.company_logo %}
-                                                    <a href="#"> <img src="{{ classified.company_logo.url }}" class="avatar avatar-small" alt=""> </a>
-                                                {% else %}
-                                                    <a href="#"> <img src="{% static 'images/users/2.jpg' %}" class="avatar avatar-small" alt=""> </a>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-9 col-sm-7 col-xs-12">
-                                            <!-- Ad Content-->
-                                            <div class="row">
-                                                <div class="content-area">
-                                                    <div class="col-md-9 col-sm-12 col-xs-12">
-                                                        <!-- Category Title -->
-                                                        <div class="category-title"><span><a href="{% url 'classifieds' %}?aircraft_type={{ classified.aircraft_type.id }}">{{ classified.aircraft_type.type_name }}</a></span></div>
-                                                        <!-- Ad Title -->
-                                                        <h3><a href="{% url 'classified' classified_id=classified.id %}">{{ classified.get_title }}</a></h3>
-                                                        <!-- Info Icons -->
-                                                        <ul class="additional-info pull-right">
-                                                            <li>
-                                                                <a data-toggle="tooltip" title="Send Message" href="{% url 'classified' classified_id=classified.id %}" class="fa fa-envelope"></a>
-                                                            </li>
-                                                            <li>
-                                                                <a data-toggle="tooltip" title="{{ classified.phone_number }}" href="{% url 'classified' classified_id=classified.id %}" class="fa fa-phone"></a>
-                                                            </li>
-                                                        </ul>
-                                                        <!-- Ad Meta Info -->
-                                                        <ul class="ad-meta-info">
-                                                            <li><i class="fa fa-map-marker"></i><a href="#">{{ classified.aircraft_location }}</a></li>
-                                                            <li><i class="fa fa-clock-o"></i>{{ classified.date_time|date:'Y-m-d H:i' }}</li>
-                                                            {% if classified.commercial_aircraft %}
-                                                                <li>
-                                                                    <span class="badge" style="background-color: #c67605"> Commercial Aircraft </span>
-                                                                </li>
-                                                            {% endif %}
-                                                        </ul>
-                                                        <!-- Ad Description-->
-                                                        <div class="ad-details">
-                                                            <p>{{ classified.description }}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 col-xs-12 col-sm-12">
-                                                        <!-- Ad Stats -->
-                                                        <div class="short-info">
-                                                            <div class="ad-stats hidden-xs"><span>Make  : </span>{{ classified.aircraft_make.make_name }}</div>
-                                                            <div class="ad-stats hidden-xs"><span>Year : </span>{{ classified.year_of_make }}</div>
-                                                        </div>
-                                                        <!-- Price -->
-                                                        <div class="price"><span>${{ classified.price_usd }}</span></div>
-                                                        <div class="">Classified Status: <span class="badge">{{ classified.get_classified_status_display }}</span></div>
-                                                        <!-- Ad View Button -->
-                                                        <a href="{% url 'classified' classified_id=classified.id %}" class="btn btn-block btn-success"><i class="fa fa-eye" aria-hidden="true"></i> View Ad.</a>
+					<!-- Images div -->
+					<div class="col-md-6 p-0 d-flex w-60 new-w-40 new-w-90 new-w-90-tb">
 
-                                                        {% if classified.classified_status == 1 %}
-                                                        <a href="{% url 'classified_deactivate' classified_id=classified.id %}" class="btn btn-block btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> Deactivate.</a>
-                                                        {% elif classified.classified_status == 2 and classified.payment_completed %}
-                                                        <a href="{% url 'classified_activate' classified_id=classified.id %}" class="btn btn-block btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> Activate.</a>
-                                                        {% elif classified.classified_status == 3 and not classified.payment_completed %}
-                                                        <a href="{% url 'classified_pay' classified_id=classified.id %}" class="btn btn-block btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> Complete Payment.</a>
-                                                        {% endif %}
+						<!--wrapper big image -->
+						<div class="w-80">
+							<img src="{{ item.get_main_image }}" style="width: 100%" height="250px" alt="new">
+						</div>
+						<!--End wrapper big image -->
 
-                                                        <a href="{% url 'classified_edit' classified_id=classified.id %}" class="btn btn-block btn-danger"><i class="fa fa-eye" aria-hidden="true"></i> Edit Ad.</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Ad Content End -->
-                                        </div>
-                                    </div>
-                                </li>
-                            {% endfor %}
-                            <!-- Listing Grid -->
-                        </ul>
-                        <div class="text-center">
-                            <ul class="pagination ">
-                                {% if classifieds_list.has_previous %}
-                                    <li><a href="?page={{ classifieds_list.previous_page_number }}"><i class="fa fa-chevron-left"></i></a></li>
-                                {% endif %}
-                                {% for i in classifieds_list.paginator.page_range %}
-                                    {% if classifieds_list.number == i %}
-                                        <li class="active"><a href="#">{{ i }}</a></li>
-                                    {% else %}
-                                        <li><a href="?page={{ i }}">{{ i }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
+						<div class="align-self-center ">
 
-                                {% if classifieds_list.has_next %}
-                                    <li><a href="?page={{ classifieds_list.next_page_number }}"><i class="fa fa-chevron-right"></i></a></li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Middle Content Area  End -->
-                    <!-- Left Sidebar -->
-                    <!-- Left Sidebar End -->
-                </div>
-                <!-- Row End -->
-            </div>
-            <!-- Main Container End -->
-        </section>
-    </div>
+							<div><img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt=""></div>
+							<div><img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt=""></div>
+							<div>
+								<img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt="">
+							</div>
+						</div>
+
+					</div>
+					<!--End images div -->
+
+
+					<!--Aircraft Info div -->
+					<div class="col-md-6 w-40 p-2 new-w-90 new-w-90-tb">
+
+						<a href="{% url 'classified' item.pk %}" class="link">{{ item.aircraft_make }} {{ item.aircraft_type }}</a>
+						<h2>${{ item.price_usd }}</h2>
+
+						<div class="d-flex justify-content-between display-flex">
+
+							<div class="">
+								<p class="m-0">Serial Number:</p>
+								<p class="m-0">Registration:</p>
+								<p class="m-0">Total Time:</p>
+								<p class="m-0">Year:</p>
+							</div>
+
+							<div class="">
+								<p class="m-0">{{ item.serial_number }}</p>
+								<p class="m-0">G-NHAA</p>
+								<p class="m-0">4,567</p>
+								<p class="m-0">{{ item.year_of_make }}</p>
+							</div>
+
+
+
+
+						</div>
+						<i class="fas fa-map-marker" style="height: 20px;width: 20px;color: red"></i><span>{{ item.aircraft_location}}</span>
+
+					</div>
+					<!--End aircraft info div -->
+
+
+				</div>
+		{% endif %}
+	{% endfor %}
+	</div>
+	{% else %}
+	<div class="alert-primary text-center p-4">
+		No classifieds added yet! <a href="{% url 'post_ad' %}" class="link" style="font-size: 15px">Add one now</a>
+	</div>
+{% endif %}
 {% endblock %}
 {% block static_content %}
+	<div class="container">
+	{% for item in list %}
+		{% if forloop.counter > 3 %}
+		<div class="row p-0 bg-black-transparent repetitve new-w-100 " style="width: 95%;margin: auto;margin-bottom: 5px!important;">
 
+					<!-- Images div -->
+					<div class="col-md-6 p-0 d-flex w-60 new-w-40 new-w-90 new-w-90-tb">
+
+						<!--wrapper big image -->
+						<div class="w-80">
+							<img src="{{ item.get_main_image }}" style="width: 100%" height="250px" alt="new">
+						</div>
+						<!--End wrapper big image -->
+
+						<div class="align-self-center ">
+
+							<div><img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt=""></div>
+							<div><img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt=""></div>
+							<div>
+								<img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt="">
+							</div>
+						</div>
+
+					</div>
+					<!--End images div -->
+
+
+					<!--Aircraft Info div -->
+					<div class="col-md-6 w-40 p-2 new-w-90 new-w-90-tb">
+
+						<a href="{% url 'classified' item.pk %}" class="link">{{ item.aircraft_make }} {{ item.aircraft_type }}</a>
+						<h2>${{ item.price_usd }}</h2>
+
+						<div class="d-flex justify-content-between display-flex">
+
+							<div class="">
+								<p class="m-0">Serial Number:</p>
+								<p class="m-0">Registration:</p>
+								<p class="m-0">Total Time:</p>
+								<p class="m-0">Year:</p>
+							</div>
+
+							<div class="">
+								<p class="m-0">{{ item.serial_number }}</p>
+								<p class="m-0">G-NHAA</p>
+								<p class="m-0">4,567</p>
+								<p class="m-0">{{ item.year_of_make }}</p>
+							</div>
+
+
+
+
+						</div>
+						<i class="fas fa-map-marker" style="height: 20px;width: 20px;color: red"></i><span>{{ item.aircraft_location}}</span>
+
+					</div>
+					<!--End aircraft info div -->
+
+
+				</div>
+		{% endif %}
+	{% endfor %}
+	</div>
 {% endblock %}

@@ -12,7 +12,7 @@
 
 			<div class="row m-0">
 
-			<div class="p-0 col-md-6 w-40">
+			<div class="p-0 col-sm-6 w-40 new-w-90 new-w-50-tb">
 				<div>
 					<img src="{% static 'images/list_classfied_1.PNG' %}" width="100%" height="300px" alt="">
 				</div>
@@ -44,100 +44,43 @@
 
 
 
-			<div class="w-50 col-md-6 ">
-				<h3>EUROCOPTER AS 365N-2</h3>
-				<h3>$15,000,000</h3>
-				<i class="fas fa-map-marker" style="color: red"></i><span class="ml-2">Newcastle, Uk</span>
+			<div class="w-50 col-sm-6 new-w-90 new-p-0">
+				<h3>{{ detail.aircraft_make}} {{ detail.aircraft_type }}</h3>
+				<h3>$ {{ detail.price_usd }}</h3>
+				<i class="fas fa-map-marker" style="color: red"></i><span class="ml-2">{{ detail.aircraft_location }}</span>
 
-				<div class="row ">
+				<div class="d-flex justify-content-between display-flex new-w-90" style="width: 60%;margin-right: auto">
 
-					<div class="col-sm-6">
+					<div class="new-p-0">
 						<p class="m-0"><b>Serial Number:</b></p>
 						<p class="m-0"><b>Registration:</b></p>
 						<p class="m-0"><b>Total Time:</b></p>
 						<p class="m-0"><b>Year:</b></p>
 					</div>
 
-					<div class="col-sm-6">
-						<p class="m-0">6341</p>
+					<div class="new-p-0">
+						<p class="m-0">{{ detail.serial_number }}</p>
 						<p class="m-0">G-NHAA</p>
 						<p class="m-0">4,532</p>
-						<p class="m-0">1991</p>
+						<p class="m-0">{{ detail.year_of_make }}</p>
 					</div>
 
 
 				</div>
 
-				<p class="my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad adipisci autem, consectetur corporis dignissimos doloremque eligendi et fugit impedit laborum minima non odio officiis omnis pariatur quidem temporibus, vitae.</p>
+				<p class="my-3">{{ detail.description }}</p>
 
 				<h3>Contact Details</h3>
-				<div class="d-flex justify-content-between">
-					<p>E:email@gmail.com</p>
-					<p>Tel:+44 091 1212112</p>
+				<div class="d-flex justify-content-between display-block display-block-tb new-w-100-tb">
+					<p>E:{{ detail.seller_email}}</p>
+					<p>Tel:{{ detail.phone_number }}</p>
 				</div>
 
 
 			</div>
-
-
-
-
-
-
-
-
 
 		</div>
 
-			<div class="d-flex justify-content-between my-3">
-
-				<div class="w-30">
-					<h3 class="my-3">Engine Details</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, distinctio magni. Accusantium consequuntur deleniti dicta distinctio dolorem earum explicabo facilis ipsa modi quae, quas tempore ullam voluptates. Adipisci, consequuntur deserunt fuga id libero, necessitatibus perferendis quasi quia recusandae similique veritatis.</p>
-
-				</div>
-
-
-				<div class="w-30">
-					<h3 class="my-3">Interior</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, distinctio magni. Accusantium consequuntur deleniti dicta distinctio dolorem earum explicabo facilis ipsa modi quae, quas tempore ullam voluptates. Adipisci, consequuntur deserunt fuga id libero, necessitatibus perferendis quasi quia recusandae similique veritatis.</p>
-
-				</div>
-
-
-				<div class="w-30">
-					<h3 class="my-3">Exterior</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, distinctio magni. Accusantium consequuntur deleniti dicta distinctio dolorem earum explicabo facilis ipsa modi quae, quas tempore ullam voluptates. Adipisci, consequuntur deserunt fuga id libero, necessitatibus perferendis quasi quia recusandae similique veritatis.</p>
-
-				</div>
-
-
-
-
-			</div>
-
-			<div class="d-flex justify-content-between my-3">
-
-				<div class="w-30">
-					<h3 class="my-3">Avionics</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, distinctio magni. Accusantium consequuntur deleniti dicta distinctio dolorem earum explicabo facilis ipsa modi quae, quas tempore ullam voluptates. Adipisci, consequuntur deserunt fuga id libero, necessitatibus perferendis quasi quia recusandae similique veritatis.</p>
-
-				</div>
-
-				<div class="w-30">
-					<h3 class="my-3">Maintenance Status</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, distinctio magni. Accusantium consequuntur deleniti dicta distinctio dolorem earum explicabo facilis ipsa modi quae, quas tempore ullam voluptates. Adipisci, consequuntur deserunt fuga id libero, necessitatibus perferendis quasi quia recusandae similique veritatis.</p>
-
-				</div>
-
-
-				<div class="w-30">
-					<h3 class="my-3">Additional Information</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, distinctio magni. Accusantium consequuntur deleniti dicta distinctio dolorem earum explicabo facilis ipsa modi quae, quas tempore ullam voluptates. Adipisci, consequuntur deserunt fuga id libero, necessitatibus perferendis quasi quia recusandae similique veritatis.</p>
-
-				</div>
-
-			</div>
 
 
 		</div>
@@ -150,6 +93,58 @@
 
 {% endblock %}
 {% block static_content %}
+	<div class="container">
+		<div class="bg-black-transparent p-2">
+					<div class="d-flex justify-content-between my-3 display-block">
+
+				<div class="w-30 height new-w-90">
+					<h3 class="my-3">Engine Details</h3>
+					<p>{{ detail.engine_details }}</p>
+
+				</div>
+
+
+				<div class="w-30 height new-w-90">
+					<h3 class="my-3">Interior</h3>
+					<p>{{ detail.interior }}</p>
+				</div>
+
+
+				<div class="w-30 height new-w-90">
+					<h3 class="my-3">Exterior</h3>
+					<p>{{ detail.exterior }}</p>
+
+				</div>
+
+
+
+
+			</div>
+
+			<div class="d-flex justify-content-between my-3 display-block">
+
+				<div class="w-30 height new-w-90">
+					<h3 class="my-3">Avionics</h3>
+					<p>{{ detail.avionics }}</p>
+
+				</div>
+
+				<div class="w-30 height new-w-90">
+					<h3 class="my-3">Maintenance Status</h3>
+					<p>{{ detail.maintenance_status }}</p>
+
+				</div>
+
+
+				<div class="w-30 height new-w-90">
+					<h3 class="my-3">Additional Information</h3>
+					<p>{{ detail.additional_information }}</p>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
 
 {% endblock %}
 
@@ -158,41 +153,4 @@
 		const bg = document.getElementById('bg')
 		bg.classList.add('bg-transparent')
 	</script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVj6yChAfe1ilA4YrZgn_UCAnei8AhQxQ&sensor=false"></script>
-    <script type="text/javascript">
-        (function ($) {
-            "use strict";
-            /* ======= Show Number ======= */
-            $('.number').click(function () {
-                $(this).find('span').text($(this).data('last'));
-            });
-
-            /* ======= Ad Location ======= */
-            var map = "";
-            var latlng = new google.maps.LatLng(47.550259, -122.264847);
-            var myOptions = {
-                zoom: 13,
-                center: latlng,
-                scrollwheel: false,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                size: new google.maps.Size(480, 240)
-            }
-            map = new google.maps.Map(document.getElementById("itemMap"), myOptions);
-            var marker = new google.maps.Marker({
-                map: map,
-                position: latlng
-            });
-            /* ======= Ad Detail On Scroll ======= */
-            //caches a jQuery object containing the header element
-            var header = $(".sticky-ad-detail");
-            $(window).scroll(function () {
-                var scroll = $(window).scrollTop();
-                if (scroll >= 500) {
-                    header.addClass("show-sticky-ad-detail");
-                } else {
-                    header.removeClass("show-sticky-ad-detail");
-                }
-            });
-        })(jQuery);
-    </script>
 {% endblock %}

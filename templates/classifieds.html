@@ -6,23 +6,23 @@
 
 
 {% block content %}
-	<div class="p-4">
+	<div class="ps-4">
 
 		<!-- form wrapper div -->
-		<div class=" w-60 ">
-			<form action="" method="GET" class="w-80 align-right">
-				<input type="text" name="name" placeholder="Keyword, Make, Model S/N" class="custom-form-control w-70">
+		<div class=" w-60 new-w-100">
+			<form action="" method="GET" class="w-80 align-right new-w-100 align-none">
+				<input type="text" name="name" placeholder="Keyword, Make, Model S/N" class="custom-form-control w-70 new-w-100 new-w-90-tb">
 				<button class="custom-btn btn-red move-left">Search</button>
 			</form>
 
 		</div>
 		<!--end form wrapper div -->
 
-		<h1 class="text-center my-3">100 Aircraft found</h1>
+		<h1 class="text-center my-3">{{ list.count }} Aircraft found</h1>
 
 		<div class="container align-right new-w-80">
-			<div class="row">
-				<p class="col-sm-10 align-right">Filter By</p>
+			<div class="row display-flex">
+				<p class="col-sm-9 align-right">Filter By</p>
 				<p class="col-sm-1">Price</p>
 				<p class="col-sm-1">Location</p>
 			</div>
@@ -30,22 +30,22 @@
 
 		</div>
 
-		<div class="my-3">
+		<div class="">
 		<div class="row ">
 
 			<!-- Filters Div -->
 			<div class="col-sm-4 bg-black-transparent ">
-				<form action="" class="p-4" >
+				<form action="{% url 'classifieds' %}" method="GET" class="p-4" >
 					<div class="my-5">
 						<h3>Aircraft type</h3>
 						<hr class="hr-1"/>
-						<input type="checkbox" name="type"><span class="ml-2">Turbine</span>
+						<input type="checkbox" name="aircraft_type__type_name"><span class="ml-2">Turbine</span>
 					</div>
 
 					<div class="my-5">
 						<h3>Brand</h3>
 						<hr class="hr-1"/>
-						<input type="checkbox" name="brand_type" ><span class="ml-2">Eurocopter</span>
+						<input type="checkbox" name="aircraft_make__make_name" ><span class="ml-2">Eurocopter</span>
 					</div>
 
 
@@ -59,12 +59,12 @@
 
 							<label for="" class="d-block text-white">
 								Min($)
-								<input type="number" class="custom-form-control w-80" name="min_price" >
+								<input type="number" class="custom-form-control w-80" name="price_usd__gte" >
 							</label>
 
 							<label for="" class="d-block text-white">
 								Max($)
-								<input type="number" class="custom-form-control w-80" name="max_price">
+								<input type="number" class="custom-form-control w-80" name="price_usd__lte">
 							</label>
 
 						</div>
@@ -78,20 +78,17 @@
 
 							<label for="" class="d-block text-white">
 								Min(Y)
-								<input type="number" class="custom-form-control w-80" name="min_year" >
+								<input type="number" class="custom-form-control w-80" name="year_of_make__gte" >
 							</label>
 
 							<label for="" class="d-block text-white">
 								Max(Y)
-								<input type="number" class="custom-form-control w-80" name="max_year">
+								<input type="number" class="custom-form-control w-80" name="year_of_make__lte">
 							</label>
 
 						</div>
 
-
-
 					</div>
-
 
 					<button class="custom-btn btn-red w-100 my-3">Search</button>
 				</form>
@@ -99,17 +96,20 @@
 			<!--End filter div -->
 
 			<!-- Actual wrapper content div -->
+			{% if list %}
+			<!--conditional check if searched result returns a list -->
 			<div class="col-sm-8 p-0">
-
+				{% for item in list %}
+				{% if forloop.counter < 3 %}
 				<!-- content div -->
-				<div class="row p-1 bg-black-transparent w-95">
+				<div class="row p-1 bg-black-transparent w-95 new-w-100" style="margin-bottom: 5px!important;">
 
 					<!-- Images div -->
-					<div class="col-md-6 p-0 d-flex w-60 new-w-40">
+					<div class="col-md-6 p-0 d-flex w-60 new-w-40 new-w-90 new-w-90-tb">
 
 						<!--wrapper big image -->
 						<div class="w-90">
-							<img src="{% static 'images/list_classfied_1.PNG' %}" style="width: 100%" height="250px" alt="new">
+							<img src="{{ item.get_main_image }}" style="width: 100%" height="250px" alt="new">
 						</div>
 						<!--End wrapper big image -->
 
@@ -127,32 +127,32 @@
 
 
 					<!--Aircraft Info div -->
-					<div class="col-md-6 w-40 p-2">
+					<div class="col-md-6 w-40 p-2 new-w-90 new-w-90-tb">
 
-						<h2>EUROCOPTER AS 365N-2</h2>
-						<h2>$15,000,000</h2>
+						<a href="{% url 'classified' item.pk %}" class="link">{{ item.aircraft_make }} {{ item.aircraft_type }}</a>
+						<h2>${{ item.price_usd }}</h2>
 
-						<div class="row">
+						<div class="d-flex justify-content-between display-flex">
 
-							<div class="col-sm-6">
+							<div class="">
 								<p class="m-0">Serial Number:</p>
 								<p class="m-0">Registration:</p>
 								<p class="m-0">Total Time:</p>
 								<p class="m-0">Year:</p>
 							</div>
 
-							<div class="col-sm-6">
-								<p class="m-0">6431</p>
+							<div class="">
+								<p class="m-0">{{ item.serial_number }}</p>
 								<p class="m-0">G-NHAA</p>
 								<p class="m-0">4,567</p>
-								<p class="m-0">1991</p>
+								<p class="m-0">{{ item.year_of_make }}</p>
 							</div>
 
 
 
 
 						</div>
-						<i class="fas fa-map-marker" style="height: 20px;width: 20px;color: red"></i><span>Newcastle, UK</span>
+						<i class="fas fa-map-marker" style="height: 20px;width: 20px;color: red"></i><span>{{ item.aircraft_location}}</span>
 
 					</div>
 					<!--End aircraft info div -->
@@ -160,8 +160,19 @@
 
 				</div>
 				<!--end content div -->
+				{% endif %}
+				{% endfor %}
 
 			</div>
+			{% else %}
+
+				<div class="alert alert-primary text-center col-sm-8 " role="alert">
+					Ops!Looks like nothing matches your query. PLease try again.
+				</div>
+
+			{% endif %}
+			<!--end conditional -->
+
 			<!-- End actual wrapper div -->
 
 
@@ -173,7 +184,73 @@
 
 {% endblock content %}
 {% block static_content %}
+	<div style="width: 80%;margin-left: auto" class="new-w-100">
+	<div class="new-w-100 lower-div new-p-1" style="width: 82.75%;margin-left: auto;position: relative;top: -153px;left: -4.5px" >
+		{% for item in list %}
+		{% if forloop.counter > 2 %}
+				<!-- content div -->
+				<div class="row p-0 bg-black-transparent repetitve new-w-100 " style="width: 95%;margin: auto;margin-bottom: 5px!important;">
 
+					<!-- Images div -->
+					<div class="col-md-6 p-0 d-flex w-60 new-w-40 new-w-90 new-w-90-tb">
+
+						<!--wrapper big image -->
+						<div class="w-80">
+							<img src="{{ item.get_main_image }}" style="width: 100%" height="250px" alt="new">
+						</div>
+						<!--End wrapper big image -->
+
+						<div class="align-self-center ">
+
+							<div><img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt=""></div>
+							<div><img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt=""></div>
+							<div>
+								<img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt="">
+							</div>
+						</div>
+
+					</div>
+					<!--End images div -->
+
+
+					<!--Aircraft Info div -->
+					<div class="col-md-6 w-40 p-2 new-w-90 new-w-90-tb">
+
+						<a href="{% url 'classified' item.pk %}" class="link">{{ item.aircraft_make }} {{ item.aircraft_type }}</a>
+						<h2>${{ item.price_usd }}</h2>
+
+						<div class="d-flex justify-content-between display-flex">
+
+							<div class="">
+								<p class="m-0">Serial Number:</p>
+								<p class="m-0">Registration:</p>
+								<p class="m-0">Total Time:</p>
+								<p class="m-0">Year:</p>
+							</div>
+
+							<div class="">
+								<p class="m-0">{{ item.serial_number }}</p>
+								<p class="m-0">G-NHAA</p>
+								<p class="m-0">4,567</p>
+								<p class="m-0">{{ item.year_of_make }}</p>
+							</div>
+
+
+
+
+						</div>
+						<i class="fas fa-map-marker" style="height: 20px;width: 20px;color: red"></i><span>{{ item.aircraft_location}}</span>
+
+					</div>
+					<!--End aircraft info div -->
+
+
+				</div>
+				<!--end content div -->
+		{% endif %}
+		{% endfor %}
+	</div>
+	</div>
 {% endblock %}
 
 {% block js %}
@@ -181,6 +258,10 @@
 
 		const bg = document.getElementById('bg')
 		bg.classList.add('bg-transparent')
+
+
+		const divs = document.getElementsByClassName('repetitve')
+		divs[divs.length-1].style.marginBottom = 0
 	</script>
 
     <!-- noUiSlider -->

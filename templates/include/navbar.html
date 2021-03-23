@@ -1,11 +1,11 @@
 {% load static %}
 <!-- wrapper div -->
 
-<div class="margin-bottom-30" id="bg">
+<div class="margin-bottom-30 new-mb-2" id="bg">
 	<!--Inner wrapper div -->
-	<div class="d-flex justify-content-between w-80 " >
+	<div class="d-flex justify-content-between w-80 display-block new-w-90" >
 		<!-- image div -->
-		<div class="align-self-center">
+		<div class="align-self-center adjust-width">
 
 			<img style="cursor: pointer" onclick="redirect_home()" src="{% static 'images/Logo_White_Pink-01.png' %}" height="130px" alt="company logo">
 
@@ -13,7 +13,7 @@
 
 
 		<!-- navbar text div -->
-		<div class="align-self-center">
+		<div class="align-self-center adjust-width">
 
 			<a href="{% url 'classifieds' %}" class="navbar-text">Buy</a>
 			<a href="{% url 'post_ad' %}" class="navbar-text">Sell</a>
@@ -30,10 +30,18 @@
 			{% endif %}
 			<!--End conditional -->
 
-			<a href="" class="navbar-text"><i class="fas fa-bars" ></i></a>
+				<span class="navbar-text" style="cursor:pointer;" onclick="toggle_menu(event)"><i class="fas fa-bars" ></i></span>
+
 		</div>
 
+
 	</div>
+		<div id="small-menu" style="display: none" class="bg-transparent p-4" >
+			<p><a href="{% url 'my_classifieds' %}" class="link" style="font-size: 18px">My Classifieds</a></p>
+			<p><a href="{% url 'contacts' %}" class="link" style="font-size: 18px">Contact us</a></p>
+		</div>
 	<!--Inner wrapper div end -->
 </div>
 <!--Wrapper div end -->
+
+

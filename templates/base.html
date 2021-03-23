@@ -79,7 +79,7 @@
 <!-- Home Banner 1 -->
 
 	<!-- background image div -->
-	<div class="bg-img text-white">
+	<div class="bg-img text-white adjusted-height">
 
 		{% include 'include/navbar.html' %}
 {% block content %}
@@ -88,11 +88,11 @@
 		<div class="d-flex p-4">
 
 			<!-- inner wrapper div -->
-			<div class="align-self-center w-60 text-center">
+			<div class="align-self-center w-60 text-center new-w-90">
 
 				<h1>Buy and sell aircraft globally</h1>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aut beatae commodi consectetur cumque deleniti dicta eos harum hic illum itaque, labore minima nisi non nulla praesentium quo ratione reiciendis repellendus repudiandae rerum soluta tempore?</p>
-				<form action="" method="GET" class="w-60">
+				<form action="" method="GET" class="w-60 new-w-90">
 					<input type="text" name="name" placeholder="Keyword, Make, Model S/N" class="custom-form-control w-100">
 					<div class="text-right my-3">
 
@@ -167,9 +167,17 @@
 <!-- Template Core JS -->
 <script src="{% static 'js/custom.js' %}"></script>
 <script type="text/javascript">
-	function redirect_home(){
-	    location.replace('/')
+
+	function toggle_menu(e){
+	    const div = document.getElementById('small-menu')
+		if (div.style.display==='none'){
+		    div.style.display='block'
+			return
+		}
+		div.style.display='none'
 	}
+
+
 </script>
 {% block js %}
 <script type="text/javascript">
