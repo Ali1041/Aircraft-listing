@@ -6,9 +6,10 @@
 	{% if list %}
 
 	<div class="container">
+	<h1 class="text-center margin-bottom-10">{{ list.count }} aircraft(s) found.</h1>
 	{% for item in list %}
 		{% if forloop.counter < 3 %}
-		<div class="row p-0 bg-black-transparent repetitve new-w-100 " style="width: 95%;margin: auto;margin-bottom: 5px!important;">
+		<div class="row p-0 bg-black-transparent repetitve new-w-100 " style="width: 85%;margin: auto;margin-bottom: 5px!important;">
 
 					<!-- Images div -->
 					<div class="col-md-6 p-0 d-flex w-60 new-w-40 new-w-90 new-w-90-tb">
@@ -40,14 +41,14 @@
 
 						<div class="d-flex justify-content-between display-flex">
 
-							<div class="">
+							<div>
 								<p class="m-0">Serial Number:</p>
 								<p class="m-0">Registration:</p>
 								<p class="m-0">Total Time:</p>
 								<p class="m-0">Year:</p>
 							</div>
 
-							<div class="">
+							<div>
 								<p class="m-0">{{ item.serial_number }}</p>
 								<p class="m-0">G-NHAA</p>
 								<p class="m-0">4,567</p>
@@ -59,7 +60,10 @@
 
 						</div>
 						<i class="fas fa-map-marker" style="height: 20px;width: 20px;color: red"></i><span>{{ item.aircraft_location}}</span>
-
+						<div>
+							<a href="{% url 'post_ad_edit' item.pk %}" style="border-radius: 4px" class="custom-btn btn-default">Edit</a>
+							<a href="{% url 'delete-ad' item.pk %}" style="border-radius: 4px" class="custom-btn btn-danger">Delete</a>
+						</div>
 					</div>
 					<!--End aircraft info div -->
 
@@ -77,8 +81,8 @@
 {% block static_content %}
 	<div class="container">
 	{% for item in list %}
-		{% if forloop.counter > 3 %}
-		<div class="row p-0 bg-black-transparent repetitve new-w-100 " style="width: 95%;margin: auto;margin-bottom: 5px!important;">
+		{% if forloop.counter > 2 %}
+		<div class="row p-0 bg-black-transparent repetitve new-w-100 " style="width: 85%;margin: auto;margin-bottom: 5px!important;">
 
 					<!-- Images div -->
 					<div class="col-md-6 p-0 d-flex w-60 new-w-40 new-w-90 new-w-90-tb">
@@ -129,7 +133,10 @@
 
 						</div>
 						<i class="fas fa-map-marker" style="height: 20px;width: 20px;color: red"></i><span>{{ item.aircraft_location}}</span>
-
+						<div>
+							<a href="{% url 'post_ad_edit' item.pk %}" style="border-radius: 4px" class="custom-btn btn-default">Edit</a>
+							<a href="{% url 'delete-ad' item.pk %}" style="border-radius: 4px" class="custom-btn btn-danger">Delete</a>
+						</div>
 					</div>
 					<!--End aircraft info div -->
 
@@ -138,4 +145,17 @@
 		{% endif %}
 	{% endfor %}
 	</div>
+{% endblock %}
+{% block js %}\
+<script>
+	const list = `{{ list.count }}`
+	console.log(list)
+	if (parseInt(list)===0){
+	    	const bgClass = document.getElementsByClassName('bg-img')
+
+	bgClass[0].style.height = 61+'vh'
+	}
+
+</script>
+
 {% endblock %}

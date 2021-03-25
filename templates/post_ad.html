@@ -54,14 +54,14 @@
 
 
 <!-- Home Banner 1 -->
-<form action="{% url 'post_ad' %}" method="POST" enctype="multipart/form-data">
+<form action="{% url 'post_ad' %}" method="POST" enctype="multipart/form-data" id="form">
 	<!-- background image div -->{% csrf_token %}
 	<div class="bg-img text-white">
 
 		{% include 'include/navbar.html' %}
 
 	<!--Wrapper upper form div -->
-	<div id="upper-form" class="new-p-2 container post-ad-form bg-black-transparent text-white extra-padding postdetails">
+	<div id="upper-form" class="new-p-4 container post-ad-form bg-black-transparent text-white extra-padding postdetails">
 
 		<h1 class="text-center">Sell your aircraft with us</h1>
 		<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, in.</p>
@@ -78,8 +78,12 @@
 
 			<select name="type" id="" required class="custom-form-control1 w-90">
 
-
+			{% if value %}
+				<option value="{{ value.aircraft_type.pk }}">{{ value.aircraft_type}}</option>
+			{% else %}
 				<option value="">Select an option</option>
+			{% endif %}
+
 
 				<!--displaying all the aircraft type options -->
 				{% for item in aircraft_type %}
@@ -95,7 +99,7 @@
 		<div class="row my-3">
 
 
-			<div class="col-md-6 p-0">
+			<div class="col-md-6 p-0 mtb">
 
 				<label for="" class="d-block">
 
@@ -104,9 +108,11 @@
 				</label>
 
 				<select name="make" id="" required class="custom-form-control1 w-90">
-
+				{% if value %}
+					<option value="{{ value.aircraft_make.pk }}">{{ value.aircraft_make }}</option>
+				{% else %}
 					<option value="">Select an option</option>
-
+				{% endif %}
 					<!-- displaying all  the available aircraft make options -->
 					{% for item in aircraft_make %}
 						<option value="{{ item.pk }}">{{ item }}</option>
@@ -121,7 +127,7 @@
 
 
 
-			<div class="col-md-6 p-0 w-40 new-w-90 new-w-100-tb">
+			<div class="col-md-6 p-0 w-40 new-w-100 new-w-100-tb">
 
 				<label for="" id="CA">
 
@@ -129,9 +135,17 @@
 				</label>
 
 				<div class="d-flex justify-content-between new-w-30-tb" style="width: 40%">
+				{% if value %}
+					<p class="m-0"><input required type="radio" value="True" name="CA">Yes</p>
+					<p class="m-0"><input required type="radio" value="False" name="CA">No</p>
+
+
+				{% else %}
 					<p class="m-0"><input required type="radio"  name="CA">Yes</p>
 					<p class="m-0"><input required type="radio" name="CA">No</p>
 
+
+				{% endif %}
 				</div>
 
 			</div>
@@ -146,14 +160,17 @@
 		<div class="row my-3">
 
 
-			<div class="col-md-6 p-0">
+			<div class="col-md-6 p-0 mtb">
 
 				<label for="" class="d-block">Price</label>
 
 				<select name="price" required id="" class="custom-form-control1 w-90">
+				{% if value %}
 
+					<option value="{{ value.price_usd }}">{{ value.price_usd }}</option>
+				{% else %}
 					<option value="">Select an option</option>
-
+				{% endif %}
 					<!--displaying all the price options -->
 					<option value="123">$ 123</option>
 				</select>
@@ -173,12 +190,17 @@
 
 
 				<select name="year" required id="" class="custom-form-control1 w-90">
-
+				{% if value %}
+					<option value="{{ value.year_of_make }}">{{ value.year_of_make }}</option>
+				{% else %}
 					<option value="">Select an option</option>
-
+				{% endif %}
 					<!--displaying all the year option -->
 					<option value="2012">
 						2012
+					</option>
+					<option value="2018">
+						2018
 					</option>
 				</select>
 
@@ -194,11 +216,14 @@
 		<div class="row my-3">
 
 
-			<div class="col-md-6 p-0">
+			<div class="col-md-6 p-0 mtb">
 				<label for="">Serial Number</label>
 				<select name="serial_number" required id="" class="custom-form-control1 w-90">
+				{% if value %}
+					<option value="{{ value.serial_number }}">{{ value.serial_number }}</option>
+				{% else %}
 					<option value="">Select an option</option>
-
+				{% endif %}
 					<!--displaying all the serial numbers -->
 					<option value="1201">1201</option>
 
@@ -210,11 +235,18 @@
 			<div class="col-md-6 p-0">
 				<label for="">Aircraft Status</label>
 				<div class="d-flex justify-content-between new-w-90" style="width: 70%">
-					<p ><input type="radio" value="1" name="aircraft_status">Parked</p>
+				{% if value %}
+					<p ><input type="radio" checked value="1" name="aircraft_status">Parked</p>
 					<p><input type="radio" value="2" name="aircraft_status">In storage</p>
 					<p><input type="radio" value="3" name="aircraft_status">Airworthy</p>
 
 
+				{% else %}
+					<p ><input type="radio" value="1" name="aircraft_status">Parked</p>
+					<p><input type="radio" value="2" name="aircraft_status">In storage</p>
+					<p><input type="radio" value="3" name="aircraft_status">Airworthy</p>
+
+				{% endif %}
 				</div>
 
 			</div>
@@ -237,7 +269,7 @@
 		<div class="bg-black text-white" style="height:fit-content   ">
 	<!--Wrapper lower div -->
 
-	<div id="wrapper" class="new-p-2 container post-ad-form bg-black-transparent text-white extra-padding postdetails">
+	<div id="wrapper" class="new-p-4 container post-ad-form bg-black-transparent text-white extra-padding postdetails">
 
 		<!--Description div -->
 		<div class="my-3">
@@ -245,7 +277,7 @@
 				Description
 			</label>
 			<textarea required class="custom-form-control1 w-100" name="description" id="" cols="5" rows="5">
-
+				{{ value.description }}
 			</textarea>
 
 		</div>
@@ -259,7 +291,7 @@
 				Engine Details
 			</label>
 			<textarea required class="custom-form-control1 w-100" name="engine_detail" id="" cols="5" rows="5">
-
+				{{ value.engine_details }}
 			</textarea>
 		</div>
 
@@ -270,7 +302,7 @@
 				Interior
 			</label>
 			<textarea required class="custom-form-control1 w-100" name="interior" id="" cols="5" rows="5">
-
+				{{ value.interior }}
 			</textarea>
 		</div>
 
@@ -283,7 +315,7 @@
 				Exterior
 			</label>
 			<textarea required class="custom-form-control1 w-100" name="exterior" id="" cols="5" rows="5">
-
+				{{ value.exterior }}
 			</textarea>
 		</div>
 
@@ -294,7 +326,7 @@
 				Avionics
 			</label>
 			<textarea required class="custom-form-control1 w-100" name="avionics" id="" cols="5" rows="5">
-
+				{{ value.avionics }}
 			</textarea>
 		</div>
 
@@ -308,7 +340,7 @@
 
 			</label>
 			<textarea required class="custom-form-control1 w-100" name="maintenance_status" id="" cols="5" rows="5">
-
+				{{ value.maintenance_status }}
 			</textarea>
 		</div>
 
@@ -320,25 +352,37 @@
 				Additional Information
 			</label>
 			<textarea  class="custom-form-control1 w-100" name="additional_status" id="" cols="5" rows="5">
-
+				{{ value.additional_information }}
 			</textarea>
 		</div>
 
 
 
 		<!--upload image div -->
+		{% if value %}
+			{% for img in images %}
+				<div class="d-flex my-5 replicate display-block">
+					<span class="align-self-center">Upload Image</span>
+					<input id="upload-btn" name="main_image" onchange="image_handle(event)" value="{{ img.get_photo_url }}" type="file" hidden style="display: none" >
+					<label class="custom-btn btn-red ml-2" for="upload-btn">Choose File</label>
+					<span class="ml-2 align-self-center" id="file-change">{{ img.get_photo_url }}</span>
+				</div>
+			{% endfor %}
 
-		<div class="d-flex my-5 replicate display-block">
-			<span class="align-self-center">Upload Image</span>
-			<input id="upload-btn" name="main_image" onchange="image_handle(event)" type="file" hidden style="display: none" >
-			<label class="custom-btn btn-red ml-2" for="upload-btn">Choose File</label>
-			<span class="ml-2 align-self-center" id="file-change">No file choosen</span>
-		</div>
+		{% else %}
+			<div class="d-flex my-5 replicate display-block">
+				<span class="align-self-center">Upload Image</span>
+				<input id="upload-btn" name="main_image" onchange="image_handle(event)" type="file" hidden style="display: none" >
+				<label class="custom-btn btn-red ml-2" for="upload-btn">Choose File</label>
+				<span class="ml-2 align-self-center" id="file-change">No file choosen</span>
+			</div>
+
+		{% endif %}
 
 		<!--Image button increment div -->
 		<div id="image-btns">
-			<button type="button" onclick="add_image(event)" style="background-color: transparent;color: #ff5a60;border: 1.5px solid #ff5a60;border-radius: 4px" class="custom-btn">+Add another image</button>
-			<button type="button" onclick="remove_image(event)" style="background-color: transparent;color: #ff5a60;border: 1.5px solid #ff5a60;border-radius: 4px" class="custom-btn">Remove image</button>
+			<button type="button" onclick="add_image(event)" style="background-color: transparent;color: #ff5a60;border: 1.5px solid #ff5a60;border-radius: 4px" class="custom-btn mtb">+Add another image</button>
+			<button type="button" onclick="remove_image(event)" style="background-color: transparent;color: #ff5a60;border: 1.5px solid #ff5a60;border-radius: 4px" class="custom-btn mtb">Remove image</button>
 		</div>
 
 		<div class="my-5">
@@ -350,16 +394,16 @@
 		<!--Contact detail row 1 wrapper div -->
 		<div class="row my-3">
 			<!-- Category  -->
-			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 p-0">
+			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 p-0 mtb">
 				<label class="d-block">Contact Email
 				</label>
-				<input type="email" name="seller_email" class="custom-form-control1 w-100">
+				<input type="email" name="seller_email" value="{{ value.seller_email }}" class="custom-form-control1 w-100">
 			</div>
 
 			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 new-p-0 new-p-0-tb">
 				<label class=" d-block">Contact Phone Number
 				</label>
-				<input type="number" class="custom-form-control1 w-100" name="phone_number">
+				<input type="number" class="custom-form-control1 w-100" value="{{ value.phone_number }}" name="phone_number">
 			</div>
 		</div>
 		<!--end contact detail row 1 wrapper div -->
@@ -367,10 +411,10 @@
 		<!--Contact detail row 2 wrapper div -->
 		<div class="row my-3">
 			<!-- Category  -->
-			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 p-0">
+			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 p-0 mtb">
 				<label class="d-block">Name/Company Name (Optional)
 				</label>
-				<input type="text" name="company_name" class="custom-form-control1 w-100">
+				<input type="text" name="company_name" value="{{ value.company_name }}" class="custom-form-control1 w-100">
 
 			</div>
 
@@ -378,7 +422,7 @@
 
 				<label class="d-block ">Aircraft Location (Required)
 				</label>
-				<input type="text" name="aircraft_location" class="custom-form-control1 w-100">
+				<input type="text" name="aircraft_location" value="{{ value.aircraft_location }}" class="custom-form-control1 w-100">
 			</div>
 
 		</div>
@@ -387,9 +431,13 @@
 		<!--company logo div -->
 		<div class="d-flex my-3 display-block">
 			<span class="align-self-center">Upload Company Logo</span>
-			<input id="upload-btn-1" name="logo" onchange="image_handle(event)" type="file" hidden="hidden" style="display: none" >
+			<input id="upload-btn-1" name="logo" onchange="image_handle(event)" value="{{ value.company_logo }}" type="file" hidden="hidden" style="display: none" >
 			<label class="custom-btn btn-red ml-2" for="upload-btn-1">Choose File</label>
+		{% if value %}
+			<span class="ml-2 align-self-center" id="file-change-1">{{ value.company_logo }}</span>
+		{% else %}
 			<span class="ml-2 align-self-center" id="file-change-1">No file choosen</span>
+		{% endif %}
 		</div>
 
 		<div class="text-center">
@@ -417,16 +465,15 @@
 
 
 <script src="{% static 'js/custom.js' %}"></script>
-<script type="text/javascript">
-	function redirect_home(){
-	    location.replace('/')
-	}
-</script>
+
 	<script>
 
 		const bg = document.getElementById('bg')
 		bg.classList.add('bg-transparent')
-
+		console.log(location.origin)
+		const list = location.href.split('/')
+		const form = document.getElementById('form')
+		form.setAttribute('action',`${location.origin}/post-ad-edit/${list[list.length-2]}/`)
 		{# remove image div #}
 
 		function remove_image(e){
@@ -489,6 +536,17 @@
 		function image_handle(e){
 			e.target.nextElementSibling.nextElementSibling.innerHTML = e.target.value
 		}
+
+		<!-- radio -->
+		const value = `{{ value.aircraft_status }}`
+		const CA = `{{ value.commercial_aircraft }}`
+		if (value){
+			const btn = document.querySelectorAll(`input[value='${value}']`)
+			btn[0].setAttribute('checked','true')
+			const btn2 = document.querySelectorAll(`input[value='${CA}']`)
+			btn2[0].setAttribute('checked','true')
+		}
+
 
 	</script>
     <script src="{% static 'jquery.formset.js' %}"></script>

@@ -10,8 +10,8 @@
 
 		<!-- form wrapper div -->
 		<div class=" w-60 new-w-100">
-			<form action="" method="GET" class="w-80 align-right new-w-100 align-none">
-				<input type="text" name="name" placeholder="Keyword, Make, Model S/N" class="custom-form-control w-70 new-w-100 new-w-90-tb">
+			<form action="{% url 'classifieds' %}" method="GET" class="w-80 align-right new-w-100 align-none">
+				<input type="text" name="search" placeholder="Keyword, Make, Model S/N" class="custom-form-control w-70 new-w-100 new-w-90-tb">
 				<button class="custom-btn btn-red move-left">Search</button>
 			</form>
 
@@ -19,6 +19,20 @@
 		<!--end form wrapper div -->
 
 		<h1 class="text-center my-3">{{ list.count }} Aircraft found</h1>
+
+		<div class="text-center">
+			{% if page_obj.has_previous %}
+			<span>{{ page_obj.previous_page_number }}</span>
+			{% endif %}
+			<span>Page {{ page_obj.number }} out of {{ page_obj.paginator.num_pages }}</span>
+			{% if page_obj.has_next %}
+			<span>{{ page_obj.next_page_number }}</span>
+			{% endif %}
+			{% if search %}
+				<p>Search results for "{{ search }}"</p>
+			{% endif %}
+
+		</div>
 
 		<div class="container align-right new-w-80">
 			<div class="row display-flex">
@@ -102,7 +116,7 @@
 				{% for item in list %}
 				{% if forloop.counter < 3 %}
 				<!-- content div -->
-				<div class="row p-1 bg-black-transparent w-95 new-w-100" style="margin-bottom: 5px!important;">
+				<div class="row p-1 bg-black-transparent w-95 new-w-100 mtb" style="margin-bottom: 5px!important;">
 
 					<!-- Images div -->
 					<div class="col-md-6 p-0 d-flex w-60 new-w-40 new-w-90 new-w-90-tb">

@@ -446,3 +446,12 @@ Designed and Development by: ScriptsBundle
 		})
 
 	}
+
+	function toggle_menu(e){
+	    const div = document.getElementById('small-menu')
+		if (div.style.display==='none'){
+		    div.style.display='block'
+			return
+		}
+		div.style.display='none'
+	}

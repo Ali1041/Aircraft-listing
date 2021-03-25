@@ -23,28 +23,28 @@ from classifieds import views as classifieds_views
 from classifieds import forms as classifieds_forms
 from django.conf import settings
 
-# from registration.backends.simple.views import RegistrationView
-from django_registration.backends.one_step.views import RegistrationView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/register/$',classifieds_views.signup,
+    path('accounts/register/',classifieds_views.signup,
         name='registration_register'),
 
     path('accounts/login/', classifieds_views.views_login, name='login'),
-    url(r'^logout/$',LogoutView.as_view(), name='logout'),
+    path('logout/',LogoutView.as_view(), name='logout'),
 
 
-    url(r'^$', classifieds_views.index, name='index'),
-    url(r'^contacts/$', classifieds_views.contacts, name='contacts'),
-    url(r'^classifieds/$', classifieds_views.ClassifiedListView.as_view(), name='classifieds'),
-    url(r'^classifieds/(?P<pk>[0-9]+)/$', classifieds_views.ClassifiedDetailView.as_view(), name='classified'),
-    url(r'^classifieds/(?P<classified_id>[0-9]+)/edit/$', classifieds_views.post_ad, name='classified_edit'),
+    path('', classifieds_views.index, name='index'),
+    path('contacts/', classifieds_views.contacts, name='contacts'),
+    path('classifieds/', classifieds_views.ClassifiedListView.as_view(), name='classifieds'),
+    path('classifieds/<int:pk>/', classifieds_views.ClassifiedDetailView.as_view(), name='classified'),
     url(r'^classifieds/(?P<classified_id>[0-9]+)/pay/$', classifieds_views.classified_pay, name='classified_pay'),
     url(r'^classifieds/(?P<classified_id>[0-9]+)/confirm-payment/$', classifieds_views.classified_confirm_payment, name='classified_confirm_payment'),
     url(r'^classifieds/(?P<classified_id>[0-9]+)/activate/$', classifieds_views.classified_activate, name='classified_activate'),
     url(r'^classifieds/(?P<classified_id>[0-9]+)/deactivate/$', classifieds_views.classified_deactivate, name='classified_deactivate'),
-    url(r'^my-classifieds/$', classifieds_views.my_classifieds, name='my_classifieds'),
-    url(r'^post-ad/$', classifieds_views.post_ad, name='post_ad'),
+    path('my-classifieds/', classifieds_views.my_classifieds, name='my_classifieds'),
+    path('post-ad/', classifieds_views.post_ad, name='post_ad'),
+    path('search/',classifieds_views.search,name='search'),
+    path('post-ad-edit/<int:pk>/',classifieds_views.post_ad,name='post_ad_edit'),
+    path('delete-ad/<int:pk>/',classifieds_views.delete_classified,name='delete-ad'),
     path('newsletter-subscribe/',classifieds_views.newsletter,name='newsletter'),
 ]
 

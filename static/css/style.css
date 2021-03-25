@@ -8684,9 +8684,14 @@ ul.listingViewIcon li.shortByListingLi ul li a {
 	.new-p-0{
 		padding:0!important;
 	}
-
+	.new-p-4{
+		padding: 17px!important;
+	}
 	.new-p-2{
 		padding: 8px!important;
+	}
+	.new-pb-2{
+		padding-bottom: 10px!important;
 	}
 	.new-p-1{
 		padding: 5px!important;
@@ -8696,6 +8701,12 @@ ul.listingViewIcon li.shortByListingLi ul li a {
 	}
 	.adjusted-height{
 		height: fit-content!important;
+	}
+	.img-height{
+		height: 250px!important;
+	}
+	.mtb{
+		margin: 5px 0!important;
 	}
 	.move-left1{
 		position: relative;
@@ -8723,6 +8734,21 @@ ul.listingViewIcon li.shortByListingLi ul li a {
 		position:relative;
 		top: 0!important;
 		left: 0!important;
+	}
+	.height-40{
+		height: 65px;
+	}
+	.new-w-35{
+		width: 35%!important;
+		margin: 10px 0 !important;
+	}
+	#small-menu {
+		width: fit-content !important;
+		position: absolute;
+		top: 29%!important;
+		left: 60%!important;
+		border-radius: 4px;
+		z-index: 1;
 	}
 }
 
