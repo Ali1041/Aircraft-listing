@@ -141,8 +141,8 @@
 
 
 				{% else %}
-					<p class="m-0"><input required type="radio"  name="CA">Yes</p>
-					<p class="m-0"><input required type="radio" name="CA">No</p>
+					<p class="m-0"><input required type="radio" value="True"  name="CA">Yes</p>
+					<p class="m-0"><input required type="radio" value="False" name="CA">No</p>
 
 
 				{% endif %}
@@ -470,10 +470,12 @@
 
 		const bg = document.getElementById('bg')
 		bg.classList.add('bg-transparent')
-		console.log(location.origin)
 		const list = location.href.split('/')
-		const form = document.getElementById('form')
-		form.setAttribute('action',`${location.origin}/post-ad-edit/${list[list.length-2]}/`)
+		if (list.length>5){
+			const form = document.getElementById('form')
+			form.setAttribute('action',`${location.origin}/post-ad-edit/${list[list.length-2]}/`)
+		}
+
 		{# remove image div #}
 
 		function remove_image(e){

@@ -1,7 +1,7 @@
 {% load static %}
 <!-- wrapper div -->
 
-<div class="margin-bottom-30 new-mb-2" id="bg">
+<div class="margin-bottom-30 new-mb-2" id="bg" style="z-index: 2;">
 	<!--Inner wrapper div -->
 	<div class="d-flex justify-content-between w-80 display-block new-w-90 new-pb-2" >
 		<!-- image div -->
@@ -38,7 +38,7 @@
 	</div>
 		<div id="small-menu" style="display: none" class="bg-transparent p-4" >
 			<p><a href="{% url 'my_classifieds' %}" class="link" style="font-size: 18px">My Classifieds</a></p>
-			<p><a href="{% url 'contacts' %}" class="link" style="font-size: 18px">Contact us</a></p>
+			<p class="m-0"><a href="{% url 'contacts' %}" class="link" style="font-size: 18px">Contact us</a></p>
 		</div>
 	<!--Inner wrapper div end -->
 </div>

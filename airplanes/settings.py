@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'classifieds',
+    'classifieds_mobile',
+    'rest_framework',
+    'rest_framework_simplejwt',
     'crispy_forms',
     'django_registration',
     'sorl.thumbnail',
@@ -148,8 +151,8 @@ GMAIL_PASSWORD = "JamesBrian123"
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'moonjetinfo@gmail.com'
-EMAIL_HOST_PASSWORD = GMAIL_PASSWORD
+EMAIL_HOST_USER = 'testingtakenornot1@gmail.com'
+EMAIL_HOST_PASSWORD = 'lemxsnhusvaljhzr'
 EMAIL_PORT = 587
 
 # CUSTOM
@@ -161,3 +164,44 @@ CONTACT_MAIN_EMAIL = CONTACT_EMAILS[0]
 CONTACT_PHONE_NUMBER = '+44 (0) 7534 165 816'
 CONTACT_ADDRESS = 'Moon Jet Group'
 
+# rest framework backend and token settings
+from datetime import timedelta
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}

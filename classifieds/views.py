@@ -14,6 +14,7 @@ from .filters import ClassifiedFilter
 import json
 from django.http import JsonResponse
 from django.db.models import Q
+from .utils import create_classified_abstraction,deleting_classified_abstraction
 
 # User model
 User = get_user_model()
@@ -93,43 +94,27 @@ def post_ad(request, **kwargs):
         # getting all the form values
         aircraft_type = models.AircraftType.objects.get(pk=request.POST['type'])
         aircraft_make = models.AircraftMake.objects.get(pk=request.POST['make'])
-        boolean_value = lambda: request.POST['CA'] == 'on'
-        commercial_aircraft = boolean_value()
-        price = request.POST['price']
-        year = request.POST['year']
-        serial_number = request.POST['serial_number']
-        aircraft_status = request.POST['aircraft_status']
-        description = request.POST['description']
-        engine_detail = request.POST['engine_detail']
-        interior = request.POST['interior']
-        exterior = request.POST['exterior']
-        avionics = request.POST['avionics']
-        maintenance_status = request.POST['maintenance_status']
-        additional_status = request.POST['additional_status']
-        seller_email = request.POST['seller_email']
-        phone = request.POST['phone_number']
-        company_name = request.POST['company_name']
-        location = request.POST['aircraft_location']
         company_logo = request.FILES.get('logo')
 
         if kwargs:
+            editable_classified_instance.aircraft_status = request.POST['aircraft_status']
             editable_classified_instance.aircraft_type = aircraft_type
             editable_classified_instance.aircraft_make = aircraft_make
-            editable_classified_instance.serial_number = serial_number
-            editable_classified_instance.commercial_aircraft = commercial_aircraft
-            editable_classified_instance.price_usd = price
-            editable_classified_instance.year_of_make = year
-            editable_classified_instance.description = description
-            editable_classified_instance.engine_details = engine_detail
-            editable_classified_instance.interior = interior
-            editable_classified_instance.exterior = exterior
-            editable_classified_instance.avionics = avionics
-            editable_classified_instance.maintenance_status = maintenance_status
-            editable_classified_instance.additional_information = additional_status
-            editable_classified_instance.phone_number = phone
-            editable_classified_instance.seller_email = seller_email
-            editable_classified_instance.company_name = company_name
-            editable_classified_instance.aircraft_location = location
+            editable_classified_instance.serial_number = request.POST['serial_number']
+            editable_classified_instance.commercial_aircraft = request.POST['CA']
+            editable_classified_instance.price_usd = request.POST['price']
+            editable_classified_instance.year_of_make = request.POST['year']
+            editable_classified_instance.description = request.POST['description']
+            editable_classified_instance.engine_details = request.POST['engine_detail']
+            editable_classified_instance.interior = request.POST['interior']
+            editable_classified_instance.exterior = request.POST['exterior']
+            editable_classified_instance.avionics = request.POST['avionics']
+            editable_classified_instance.maintenance_status = request.POST['maintenance_status']
+            editable_classified_instance.additional_information = request.POST['additional_status']
+            editable_classified_instance.phone_number = request.POST['phone_number']
+            editable_classified_instance.seller_email = request.POST['seller_email']
+            editable_classified_instance.company_name = request.POST['company_name']
+            editable_classified_instance.aircraft_location = request.POST['aircraft_location']
 
             main_images = request.FILES.getlist('main_images')
             if main_images:
@@ -140,48 +125,19 @@ def post_ad(request, **kwargs):
                         classified_images_instance[img].image = main_images[img]
                     else:
                         classified_images_instance[img].delete()
+
             if company_logo:
                 editable_classified_instance.company_logo = company_logo
             else:
                 editable_classified_instance.company_logo = editable_classified_instance.company_logo
+
             editable_classified_instance.save()
             return redirect('my_classifieds')
+
+
         # creating the db instance of form data
         else:
-            classified_instance = models.Classified.objects.create(
-                aircraft_type=aircraft_type,
-                aircraft_make=aircraft_make,
-                aircraft_status=aircraft_status,
-                aircraft_location=location,
-                serial_number=serial_number,
-                commercial_aircraft=commercial_aircraft,
-                price_usd=price,
-                year_of_make=year,
-
-                description=description,
-                engine_details=engine_detail,
-                interior=interior,
-                exterior=exterior,
-                avionics=avionics,
-                maintenance_status=maintenance_status,
-                additional_information=additional_status,
-                seller_email=seller_email,
-                phone_number=phone,
-                company_name=company_name,
-                company_logo=company_logo,
-
-                user=request.user
-            )
-            classified_instance.aircraft_make.number_of_classifieds += 1
-            classified_instance.payment_completed = False
-            classified_instance.classified_status = models.Classified.AWAITING_PAYMENT
-            classified_instance.save()
-
-            for img in request.FILES.getlist('main_image'):
-                models.ClassifiedImage.objects.create(
-                    classified=classified_instance,
-                    image=img
-                )
+            create_classified_abstraction(request, **request.POST)
             return redirect('classifieds')
 
     # GET request handle
@@ -299,8 +255,7 @@ def my_classifieds(request):
 
 @login_required
 def delete_classified(request, **kwargs):
-    classified_instance = models.Classified.objects.get(pk=kwargs['pk'])
-    classified_instance.delete()
+    deleting_classified_abstraction(request,**kwargs)
     return redirect('my_classifieds')
 
 
@@ -314,7 +269,6 @@ def newsletter(request):
 
 # search function
 def search(request, **kwargs):
-    print(request.GET)
     classified_instance = models.Classified.objects.filter(
         Q(aircraft_make__make_name__icontains=request.GET.get('search')) | Q(
             aircraft_type__type_name__icontains=request.GET.get('search'))
