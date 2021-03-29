@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'classifieds',
     'classifieds_mobile',
     'rest_framework',
@@ -45,9 +46,60 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_registration',
     'sorl.thumbnail',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.apple',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+
 ]
+SITE_ID = 1
 
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    },
+    'facebook':
+       {'METHOD': 'oauth2',
+        'SCOPE': ['email','public_profile', 'user_friends'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time'],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': lambda request: 'kr_KR',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.4'},
+    'apple': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
+SOCIAL_AUTH_FACEBOOK_KEY = '148611413820495'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET ='a1361b6793cc8df91f36e8e1de9eb24c!'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -72,6 +124,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'classifieds.context_processors.categories_processor',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -137,6 +190,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # AUTH
 
 AUTH_USER_MODEL = 'classifieds.User'
+LOGIN_REDIRECT_URL = "/"
+
 LOGOUT_REDIRECT_URL = 'index'
 # CRISPY
 
@@ -163,6 +218,16 @@ CONTACT_EMAILS = ['info@moonjetgroup.com']
 CONTACT_MAIN_EMAIL = CONTACT_EMAILS[0]
 CONTACT_PHONE_NUMBER = '+44 (0) 7534 165 816'
 CONTACT_ADDRESS = 'Moon Jet Group'
+
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 # rest framework backend and token settings
 from datetime import timedelta

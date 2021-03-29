@@ -38,6 +38,10 @@ urlpatterns = [
     path('',include('classifieds.urls')),
     path('mobile-api/',include('classifieds_mobile.urls')),
 
+
+    # all auth authentication
+    path('accounts/', include('allauth.urls')),
+
     # reset password urls
     path('reset_password/', PasswordResetView.as_view(template_name='registration/reset_password.html'),
          name='reset_password'),
