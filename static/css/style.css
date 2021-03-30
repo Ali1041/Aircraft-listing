@@ -8746,7 +8746,7 @@ ul.listingViewIcon li.shortByListingLi ul li a {
 		width: fit-content !important;
 		position: absolute;
 		top: 29%!important;
-		left: 60%!important;
+		left: 50%!important;
 		border-radius: 4px;
 		z-index: 1;
 	}

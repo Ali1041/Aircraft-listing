@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load bootstrap_tags %}
-
+{% load socialaccount %}
 
 {% block content %}
     <!-- =-=-=-=-=-=-= Main Content Area =-=-=-=-=-=-= -->
@@ -32,9 +32,9 @@
 		        <div>
 
 					<p>Or sign up using</p>
-			        <button class="custom-btn btn-white w-100"><i class="fab fa-facebook blue" ></i><span class="blue ml-2">Facebook</span></button>
-			        <button class="custom-btn btn-white w-100 my-3 "><i class="fab fa-google red" ></i><span class="red ml-2">Google</span></button>
-			        <button class="custom-btn btn-white w-100"><i class="fab fa-apple black" ></i><span class="black ml-2">Apple</span></button>
+			        <a href="{% provider_login_url 'facebook' %}" class="btn btn-white w-100"><i class="fab fa-facebook blue" ></i><span class="blue ml-2">Facebook</span></a>
+			        <a href="{% provider_login_url 'google' %}" class="btn btn-white w-100 my-3 "><i class="fab fa-google red" ></i><span class="red ml-2">Google</span></a>
+			        <a href="{% provider_login_url 'apple' %}" class="btn btn-white w-100"><i class="fab fa-apple black" ></i><span class="black ml-2">Apple</span></a>
 
 				</div>
 
@@ -47,4 +47,44 @@
 
 	<!-- login main content end -->
 
+{% endblock %}
+{% block js %}
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '148611413820495',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v10.0'
+    });
+
+    FB.AppEvents.logPageView();
+
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+});
+
+{#<fb:login-button#}
+{#  scope="public_profile,email"#}
+{#  onlogin="checkLoginState();">#}
+{#</fb:login-button>#}
+{##}
+{##}
+{#function checkLoginState() {#}
+{#  FB.getLoginStatus(function(response) {#}
+{#    statusChangeCallback(response);#}
+{#  });#}
+{#}#}
+{#</script>#}
 {% endblock %}

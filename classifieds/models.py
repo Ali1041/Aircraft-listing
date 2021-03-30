@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import datetime
-
+from django.contrib.auth.validators import validators
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
@@ -115,10 +115,10 @@ class Classified(models.Model):
     classified_status = models.IntegerField(choices=CLASSIFIED_STATUS_CHOICES, default=ACTIVE)
     payment_completed = models.BooleanField(default=True)
 
-    price_usd = models.DecimalField(max_digits=8, decimal_places=2)
+    price_usd = models.FloatField()
     aircraft_type = models.ForeignKey(AircraftType, on_delete=models.CASCADE)
     aircraft_make = models.ForeignKey(AircraftMake, on_delete=models.CASCADE)
-    serial_number = models.CharField(max_length=255, blank=True, null=True)
+    serial_number = models.CharField(max_length=255, blank=True, null=True,validators=[validators.MaxLengthValidator(200,message='The serial number is too large.')])
     year_of_make = models.IntegerField(choices=YEAR_CHOICES, default=datetime.datetime.now().year)
     aircraft_status = models.IntegerField(choices=AIRCRAFT_STATUS_CHOICES, default=PARKED)
     commercial_aircraft = models.BooleanField(default=False, choices=COMMERCIAL_AIRCRAFT_CHOICES)
@@ -130,10 +130,13 @@ class Classified(models.Model):
     maintenance_status = models.TextField(blank=True, null=True)
     additional_information = models.TextField(blank=True, null=True)
 
-    phone_number = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20,validators=[validators.MaxLengthValidator(17,message='Not a valid '
+                                                                                                       'entry'),
+                                                              validators.MinLengthValidator(8,message='Not a valid '
+                                                                                                      'entry')])
     seller_email = models.EmailField()
-    aircraft_location = models.CharField(max_length=255)
-    company_name = models.CharField(max_length=255, blank=True, null=True)
+    aircraft_location = models.CharField(max_length=255,validators=[validators.MaxLengthValidator(230,message='Address is too large')])
+    company_name = models.CharField(max_length=255, blank=True, null=True,validators=[validators.MaxLengthValidator(200,message='Name is too large')])
     company_logo = models.ImageField(blank=True, null=True, upload_to='company_logos')
 
     class Meta:
@@ -163,9 +166,7 @@ class Classified(models.Model):
         return ClassifiedImage.objects.filter(classified=self).count()
 
     def get_main_image(self):
-        print(self)
         images = ClassifiedImage.objects.filter(classified=self)
-        print(images)
         if images.count() == 0:
             return False
         else:
