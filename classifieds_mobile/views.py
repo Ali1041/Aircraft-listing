@@ -6,7 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from rest_framework.decorators import permission_classes
 from rest_framework.decorators import api_view
-from classifieds.utils import create_classified_abstraction, deleting_classified_abstraction
+from classifieds.utils import create_classified_abstraction, deleting_classified_abstraction, \
+    editing_classified_abstraction
 from rest_framework import permissions
 
 
@@ -57,8 +58,9 @@ def post_ad_api(request):
 @csrf_exempt
 def edit_ad_api(request, **kwargs):
     data = json.loads(request.body)
-    print(data)
-    pass
+    classified_instance = models.Classified.objects.get(pk=kwargs.get('pk'))
+    editing_classified_abstraction(request, classified_instance,**data)
+    return JsonResponse({'data:Edited Successfully'}, status=200, content_type='application/json')
 
 
 # deleting classifieds
