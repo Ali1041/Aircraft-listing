@@ -13,7 +13,7 @@ from django.conf import settings as proj_settings
 from .filters import ClassifiedFilter
 import json
 from django.http import JsonResponse
-from django.db.models import Q
+from django.db.models import Q,Count
 from .utils import create_classified_abstraction, deleting_classified_abstraction, editing_classified_abstraction
 
 # User model
@@ -183,6 +183,19 @@ class ClassifiedListView(generic.ListView):
         ctx = super().get_context_data()
         if len(self.request.GET) == 1:
             ctx['search'] = self.request.GET.get('search')
+
+        # aircraft make instance for filter
+        aircraft_make_instances = models.AircraftMake.objects.annotate(count=Count('make_name')).order_by()
+        print(aircraft_make_instances)
+        ctx['aircraft_make_instances'] = aircraft_make_instances[:3]
+
+        # aircraft type instance for filter
+        aircraft_type_instances = models.AircraftType.objects.annotate(count=Count('type_name')).order_by()
+        print(aircraft_type_instances)
+        ctx['aircraft_type_instances'] = aircraft_type_instances[:3]
+
+        # get remaining images
+        # ctx['images'] = models.ClassifiedImage.objects.filter(pk=self.kwargs['pk'])
         return ctx
 
     def get_queryset(self):

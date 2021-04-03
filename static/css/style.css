@@ -8750,6 +8750,9 @@ ul.listingViewIcon li.shortByListingLi ul li a {
 		border-radius: 4px;
 		z-index: 1;
 	}
+	.mr-1{
+		margin-right:5px ;
+	}
 }
 
 

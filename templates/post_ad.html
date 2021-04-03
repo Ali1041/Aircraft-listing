@@ -372,7 +372,7 @@
 		{% else %}
 			<div class="d-flex my-5 replicate display-block">
 				<span class="align-self-center">Upload Image</span>
-				<input id="upload-btn" name="main_image" onchange="image_handle(event)" type="file" hidden style="display: none" >
+				<input required id="upload-btn" name="main_image" onchange="image_handle(event)" type="file" hidden style="display: none" >
 				<label class="custom-btn btn-red ml-2" for="upload-btn">Choose File</label>
 				<span class="ml-2 align-self-center" id="file-change">No file choosen</span>
 			</div>
@@ -397,13 +397,13 @@
 			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 p-0 mtb">
 				<label class="d-block">Contact Email
 				</label>
-				<input type="email" name="seller_email" value="{{ value.seller_email }}" class="custom-form-control1 w-100">
+				<input type="email" required name="seller_email" value="{{ value.seller_email }}" class="custom-form-control1 w-100">
 			</div>
 
 			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 new-p-0 new-p-0-tb">
 				<label class=" d-block">Contact Phone Number
 				</label>
-				<input type="number" class="custom-form-control1 w-100" value="{{ value.phone_number }}" name="phone_number">
+				<input type="number" required class="custom-form-control1 w-100" value="{{ value.phone_number }}" name="phone_number">
 			</div>
 		</div>
 		<!--end contact detail row 1 wrapper div -->
@@ -422,7 +422,7 @@
 
 				<label class="d-block ">Aircraft Location (Required)
 				</label>
-				<input type="text" name="aircraft_location" value="{{ value.aircraft_location }}" class="custom-form-control1 w-100">
+				<input type="text" required name="aircraft_location" value="{{ value.aircraft_location }}" class="custom-form-control1 w-100">
 			</div>
 
 		</div>

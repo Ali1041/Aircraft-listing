@@ -174,7 +174,7 @@ class Classified(models.Model):
 
 
 class ClassifiedImage(models.Model):
-    classified = models.ForeignKey(Classified, on_delete=models.CASCADE)
+    classified = models.ForeignKey(Classified, on_delete=models.CASCADE,related_name='multiple_imgs')
     image = ImageField(upload_to="classified_images")
 
     def __str__(self):

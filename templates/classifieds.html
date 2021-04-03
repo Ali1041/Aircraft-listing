@@ -49,17 +49,21 @@
 
 			<!-- Filters Div -->
 			<div class="col-sm-4 bg-black-transparent ">
-				<form action="{% url 'classifieds' %}" method="GET" class="p-4" >
+				<form action="{% url 'classifieds' %}" onsubmit="validate(event)" method="GET" class="p-4" >
 					<div class="my-5">
 						<h3>Aircraft type</h3>
 						<hr class="hr-1"/>
-						<input type="checkbox" name="aircraft_type__type_name"><span class="ml-2">Turbine</span>
+						{% for item in aircraft_type_instances %}
+						<input type="checkbox" name="aircraft_type__type_name" value="{{ item.type_name }}"><span class="ml-2">{{ item }}</span>
+						{% endfor %}
 					</div>
 
 					<div class="my-5">
 						<h3>Brand</h3>
 						<hr class="hr-1"/>
-						<input type="checkbox" name="aircraft_make__make_name" ><span class="ml-2">Eurocopter</span>
+						{% for item in aircraft_make_instances %}
+						<input type="checkbox" name="aircraft_make__make_name" value="{{ item.make_name }}"><span class="ml-2">{{ item }}</span>
+						{% endfor %}
 					</div>
 
 
@@ -92,19 +96,20 @@
 
 							<label for="" class="d-block text-white">
 								Min(Y)
-								<input type="number" class="custom-form-control w-80" name="year_of_make__gte" >
+								<input type="number" class="custom-form-control w-90" name="year_of_make__gte" >
 							</label>
 
 							<label for="" class="d-block text-white">
 								Max(Y)
-								<input type="number" class="custom-form-control w-80" name="year_of_make__lte">
+								<input type="number" class="custom-form-control w-90" name="year_of_make__lte">
 							</label>
 
 						</div>
 
 					</div>
-
+					<p class="m-0 text-danger" id="error"></p>
 					<button class="custom-btn btn-red w-100 my-3">Search</button>
+
 				</form>
 			</div>
 			<!--End filter div -->
@@ -127,13 +132,16 @@
 						</div>
 						<!--End wrapper big image -->
 
-						<div class="align-self-center ">
+						<div class="align-self-center ml-2">
+						{% for image in item.multiple_imgs.all %}
+						{% if forloop.counter < 4 %}
+						<div>
 
-							<div><img src="{% static 'images/list_classfied_1.PNG' %}" height="83px" alt=""></div>
-							<div><img src="{% static 'images/list_classfied_1.PNG' %}" height="83px" alt=""></div>
-							<div>
-								<img src="{% static 'images/list_classfied_1.PNG' %}" height="83px" alt="">
-							</div>
+						<img src="{{ image.get_photo_url }}" height="83px" alt="">
+
+						</div>
+						{% endif %}
+					{% endfor %}
 						</div>
 
 					</div>
@@ -214,13 +222,16 @@
 						</div>
 						<!--End wrapper big image -->
 
-						<div class="align-self-center ">
+						<div class="align-self-center ml-2">
+						{% for image in item.multiple_imgs.all %}
+						{% if forloop.counter < 4 %}
+						<div>
 
-							<div><img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt=""></div>
-							<div><img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt=""></div>
-							<div>
-								<img src="{% static 'images/list_classfied_1.PNG' %}" height="81px" alt="">
-							</div>
+						<img src="{{ image.get_photo_url }}" height="83px" alt="">
+
+						</div>
+						{% endif %}
+					{% endfor %}
 						</div>
 
 					</div>
@@ -276,6 +287,33 @@
 
 		const divs = document.getElementsByClassName('repetitve')
 		divs[divs.length-1].style.marginBottom = 0
+
+
+		function validate(e){
+		    const minYear = e.target.children[3].lastElementChild.firstElementChild.firstElementChild.value
+			const maxYear = e.target.children[3].lastElementChild.lastElementChild.firstElementChild.value
+			const error = document.getElementById('error')
+			if (maxYear.length!==4 || minYear.length!==4||parseInt(minYear)<0||parseInt(maxYear)<0){
+			    e.preventDefault()
+
+				error.innerHTML = 'Enter a valid Year'
+				setTimeout(()=>{
+				    error.innerHTML = ''
+				},2000)
+
+			}
+
+			const maxPrice = e.target.children[2].lastElementChild.lastElementChild.firstElementChild.value
+			const minPrice = e.target.children[2].lastElementChild.firstElementChild.firstElementChild.value
+			if (maxPrice.length>15||parseInt(minPrice)<0||parseInt(maxPrice)<0){
+			    e.preventDefault()
+				error.innerHTML = 'Enter a valid Price'
+				setTimeout(()=>{
+				    error.innerHTML = ''
+				},2000)
+			}
+
+		}
 	</script>
 
     <!-- noUiSlider -->

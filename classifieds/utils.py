@@ -3,8 +3,10 @@ from django.http import HttpResponse
 
 
 def create_classified_abstraction(request, **kwargs):
-    aircraft_type = models.AircraftType.objects.get(pk=['type'])
-    aircraft_make = models.AircraftMake.objects.get(pk=['make'])
+    aircraft_type = models.AircraftType.objects.get(pk=kwargs['type'][0])
+    aircraft_make = models.AircraftMake.objects.get(pk=kwargs['make'][0])
+    print(request.FILES)
+
     classified_instance = models.Classified.objects.create(
         aircraft_type=aircraft_type,
         aircraft_make=aircraft_make,
@@ -25,7 +27,7 @@ def create_classified_abstraction(request, **kwargs):
         seller_email=kwargs['seller_email'][0],
         phone_number=kwargs['phone_number'][0],
         company_name=kwargs['company_name'][0],
-        company_logo=request.FILES['logo'],
+        company_logo=request.FILES.get('logo'),
 
         user=request.user
     )
@@ -49,8 +51,8 @@ def deleting_classified_abstraction(request, **kwargs):
 
 
 def editing_classified_abstraction(request, editable_classified_instance, **kwargs):
-    aircraft_type = models.AircraftType.objects.get(pk=['type'])
-    aircraft_make = models.AircraftMake.objects.get(pk=['make'])
+    aircraft_type = models.AircraftType.objects.get(pk=kwargs['type'][0])
+    aircraft_make = models.AircraftMake.objects.get(pk=kwargs['make'][0])
     company_logo = request.FILES.get('logo')
     editable_classified_instance.aircraft_status = kwargs['aircraft_status'][0]
     editable_classified_instance.aircraft_type = aircraft_type

@@ -14,29 +14,20 @@
 
 			<div class="p-0 col-sm-6 w-40 new-w-100 new-w-50-tb">
 				<div>
-					<img src="{% static 'images/list_classfied_1.PNG' %}" class="img-height" width="100%" height="300px" alt="">
+					<img src="{{ detail.get_main_image }}" class="img-height" width="100%" height="300px" alt="">
 				</div>
 
-				<div class="d-flex">
-					<div>
+				<div class="d-flex margin-top-10">
+					{% for image in detail.multiple_imgs.all %}
+						{% if forloop.counter < 4 %}
+					<div class="mr-1">
 
-						<img src="{% static 'images/list_classfied_1.PNG' %}" height="102px" alt="">
-
-					</div>
-
-
-					<div>
-
-						<img src="{% static 'images/list_classfied_1.PNG' %}" height="102px" alt="">
+						<img src="{{ image.get_photo_url }}" height="102px" alt="">
 
 					</div>
+						{% endif %}
+					{% endfor %}
 
-
-					<div>
-
-						<img src="{% static 'images/list_classfied_1.PNG' %}" height="102px" alt="">
-
-					</div>
 				</div>
 
 			</div>
@@ -68,7 +59,7 @@
 
 				</div>
 
-				<p class="my-3">{{ detail.description }}</p>
+				<p class="my-3" style="width: fit-content">{{ detail.description|safe}}</p>
 
 				<h3>Contact Details</h3>
 				<div class="d-flex justify-content-between display-block display-block-tb new-w-100-tb">
@@ -99,20 +90,20 @@
 
 				<div class="w-30 height new-w-100">
 					<h3 class="my-3">Engine Details</h3>
-					<p>{{ detail.engine_details }}</p>
+					<p>{{ detail.engine_details|safe }}</p>
 
 				</div>
 
 
 				<div class="w-30 height new-w-100">
 					<h3 class="my-3">Interior</h3>
-					<p>{{ detail.interior }}</p>
+					<p>{{ detail.interior|safe }}</p>
 				</div>
 
 
 				<div class="w-30 height new-w-100">
 					<h3 class="my-3">Exterior</h3>
-					<p>{{ detail.exterior }}</p>
+					<p>{{ detail.exterior|safe }}</p>
 
 				</div>
 
@@ -125,20 +116,20 @@
 
 				<div class="w-30 height new-w-100">
 					<h3 class="my-3">Avionics</h3>
-					<p>{{ detail.avionics }}</p>
+					<p>{{ detail.avionics|safe }}</p>
 
 				</div>
 
 				<div class="w-30 height new-w-100">
 					<h3 class="my-3">Maintenance Status</h3>
-					<p>{{ detail.maintenance_status }}</p>
+					<p>{{ detail.maintenance_status|safe }}</p>
 
 				</div>
 
 
 				<div class="w-30 height new-w-100">
 					<h3 class="my-3">Additional Information</h3>
-					<p>{{ detail.additional_information }}</p>
+					<p>{{ detail.additional_information|safe }}</p>
 
 				</div>
 

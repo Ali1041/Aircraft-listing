@@ -83,5 +83,11 @@ def users_classifieds_api(request):
 @permission_classes([permissions.AllowAny])
 def contact_us_api(request):
     data = json.loads(request.body)
-    print(data)
+    # msg_plain = render_to_string('emails/contact_form.txt')
+    #
+    # email = EmailMessage('Contact Form: %s' % form.cleaned_data.get("subject"), msg_plain,
+    #                      to=proj_settings.CONTACT_EMAILS)  # CONTACT EMAILS IS A LIST
+    # email.send()
+    #
+    # messages.success(request, 'Your message has been sent successfully. We will get in touch shortly!')
     return JsonResponse({'status': 'Form submitted successfully!'})
